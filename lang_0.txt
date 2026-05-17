@@ -1,0 +1,79 @@
+PRESS CENTRE KEY
+ 
+GAME START
+STAGE SELECT
+HOW TO PLAY
+RANKING
+CONFIG
+Start game.
+Choose stage and start game.
+View game controls and help.
+View previous records.
+Change volume and difficulty level.
+CLEAR HIGH SCORE: # KEY
+Clear high score.
+Ok?
+ 
+ 
+YES
+NO
+High score cleared.
+ 
+DIFFICULTY
+SOUND
+VIBRATION
+LANGUAGE
+EASY
+NORMAL
+HARD
+ON
+OFF
+SOFT
+MEDIUM
+LOUD
+ENGLISH
+GERMAN
+FRENCH
+SPANISH
+ITALIAN
+BACK
+QUIT
+SOUND
+MUTE
+NEW GAME
+LOAD GAME
+NOW LOADING¥¥¥
+Start game from the beginning.
+Resume saved game.
+Set game difficulty.
+Set sound volume.
+Turn vibration ON/OFF.
+Change language.
+START
+OK
+QUIT
+NEXT
+BACK
+PAUSE
+RESUME
+CANCEL
+HELP
+YES
+NO
+TITLE
+MENU
+SOUND
+MUTE
+RESUME GAME
+BACK TO TITLE
+Quit game and return
+to Title Menu.
+Ok?
+SOUND
+OFF
+SOFT
+MEDIUM
+LOUD
+MUSIC COMPOSED
+BY MASATO NAKAMURA
+ 
