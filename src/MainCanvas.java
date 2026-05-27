@@ -1080,31 +1080,31 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    }
 
    public void save_resu() {
-      byte[] var2 = new byte[7];
-      var2[0] = this.resumeStage;
-      var2[1] = this.resumeZanki;
+      byte[] savedata = new byte[7];
+      savedata[0] = this.resumeStage;
+      savedata[1] = this.resumeZanki;
 
       for(int var1 = 0; var1 < 4; ++var1) {
-         var2[2 + var1] = (byte)(this.resumeScore >> var1 * 8 % 256);
+         savedata[2 + var1] = (byte)(this.resumeScore >> var1 * 8 % 256);
       }
 
-      var2[6] = this.clearStageData;
-      this.SaveRecordStore(var2, "resu");
+      savedata[6] = this.clearStageData;
+      this.SaveRecordStore(savedata, "resu");
    }
 
    public void load_resu() {
       try {
-         byte[] var1 = this.LoadRecordStore("resu");
-         this.resumeStage = var1[0];
-         this.resumeZanki = var1[1];
+         byte[] savedata = this.LoadRecordStore("resu");
+         this.resumeStage = savedata[0];
+         this.resumeZanki = savedata[1];
          int var3 = 0;
 
          for(int var2 = 0; var2 < 4; ++var2) {
-            var3 |= (var1[2 + var2] & 255) << var2 * 8;
+            var3 |= (savedata[2 + var2] & 255) << var2 * 8;
          }
 
          this.resumeScore = var3;
-         this.clearStageData = var1[6];
+         this.clearStageData = savedata[6];
       } catch (Throwable var4) {
          this.save_resu();
       }
@@ -1112,29 +1112,29 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    }
 
    public void save_hisc() {
-      byte[] var3 = new byte[25];
+      byte[] savescores = new byte[25];
 
       for(int var1 = 0; var1 < 5; ++var1) {
-         var3[0 + var1 * 5] = (byte)m_nDifficulty[var1];
+         savescores[0 + var1 * 5] = (byte)m_nDifficulty[var1];
 
          for(int var2 = 0; var2 < 4; ++var2) {
-            var3[1 + var2 + var1 * 5] = (byte)(m_nHiScore[var1] >> var2 * 8 % 256);
+            savescores[1 + var2 + var1 * 5] = (byte)(m_nHiScore[var1] >> var2 * 8 % 256);
          }
       }
 
-      this.SaveRecordStore(var3, "hisc");
+      this.SaveRecordStore(savescores, "hisc");
    }
 
    public void load_hisc() {
       try {
-         byte[] var3 = this.LoadRecordStore("hisc");
+         byte[] savescores = this.LoadRecordStore("hisc");
 
          for(int var1 = 0; var1 < 5; ++var1) {
-            m_nDifficulty[var1] = var3[0 + var1 * 5];
+            m_nDifficulty[var1] = savescores[0 + var1 * 5];
             int var4 = 0;
 
             for(int var2 = 0; var2 < 4; ++var2) {
-               var4 |= (var3[1 + var2 + var1 * 5] & 255) << var2 * 8;
+               var4 |= (savescores[1 + var2 + var1 * 5] & 255) << var2 * 8;
             }
 
             m_nHiScore[var1] = var4;
@@ -2320,7 +2320,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          int[][] var1;
          if (this.stageNumber == 0) {
             try {
-               var1 = this.searchObject(62, 227);
+               var1 = this.searchObject(DAI2_SFLAG, 227);
                if (var1.length > 0 && var1[0][5] != 0 && this.kyuryuTable[0][0] <= this.PlayerPosX() && this.kyuryuTable[0][2] > this.PlayerPosX() && this.kyuryuTable[0][1] <= this.PlayerPosY() - 16 && this.kyuryuTable[0][3] > this.PlayerPosY() - 16) {
                   return true;
                }
@@ -2336,13 +2336,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   return true;
                }
 
-               var1 = this.searchObject(93, -1);
+               var1 = this.searchObject(BEN_SFLAG, -1);
                if (var1.length > 0) {
                   if (var1[0][2] < this.PlayerPosX() && this.kyuryuTable[2][0] <= this.PlayerPosX() && this.kyuryuTable[2][2] > this.PlayerPosX() && this.kyuryuTable[2][1] <= this.PlayerPosY() && this.kyuryuTable[2][3] > this.PlayerPosY()) {
                      return true;
                   }
                } else {
-                  var1 = this.searchObject(92, -1);
+                  var1 = this.searchObject(BEN_NFLAG, -1);
                   if (var1.length > 0) {
                      if (var1[0][2] < this.PlayerPosX() && this.kyuryuTable[2][0] <= this.PlayerPosX() && this.kyuryuTable[2][2] > this.PlayerPosX() && this.kyuryuTable[2][1] <= this.PlayerPosY() && this.kyuryuTable[2][3] > this.PlayerPosY()) {
                         return true;
@@ -2359,13 +2359,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   return true;
                }
 
-               var1 = this.searchObject(93, -1);
+               var1 = this.searchObject(BEN_SFLAG, -1);
                if (var1.length > 0) {
                   if (var1[0][2] < this.PlayerPosX() && this.kyuryuTable[3][0] <= this.PlayerPosX() && this.kyuryuTable[3][2] > this.PlayerPosX() && this.kyuryuTable[3][1] <= this.PlayerPosY() && this.kyuryuTable[3][3] > this.PlayerPosY()) {
                      return true;
                   }
                } else {
-                  var1 = this.searchObject(92, -1);
+                  var1 = this.searchObject(BEN_NFLAG, -1);
                   if (var1.length > 0) {
                      if (var1[0][2] < this.PlayerPosX() && this.kyuryuTable[3][0] <= this.PlayerPosX() && this.kyuryuTable[3][2] > this.PlayerPosX() && this.kyuryuTable[3][1] <= this.PlayerPosY() && this.kyuryuTable[3][3] > this.PlayerPosY()) {
                         return true;
@@ -2382,13 +2382,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   return true;
                }
 
-               var1 = this.searchObject(93, -1);
+               var1 = this.searchObject(BEN_SFLAG, -1);
                if (var1.length > 0) {
                   if (var1[0][2] < this.PlayerPosX() && this.kyuryuTable[4][0] <= this.PlayerPosX() && this.kyuryuTable[4][2] > this.PlayerPosX() && this.kyuryuTable[4][1] <= this.PlayerPosY() && this.kyuryuTable[4][3] > this.PlayerPosY()) {
                      return true;
                   }
                } else {
-                  var1 = this.searchObject(92, -1);
+                  var1 = this.searchObject(BEN_NFLAG, -1);
                   if (var1.length > 0) {
                      if (var1[0][2] < this.PlayerPosX() && this.kyuryuTable[4][0] <= this.PlayerPosX() && this.kyuryuTable[4][2] > this.PlayerPosX() && this.kyuryuTable[4][1] <= this.PlayerPosY() && this.kyuryuTable[4][3] > this.PlayerPosY()) {
                         return true;
@@ -2758,120 +2758,120 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          indata = new DataInputStream(this.getClass().getResourceAsStream("/blkcol.bct"));
          indata.read(blockColTable);
          indata.close();
-         this.m_imgObj[0] = this.createImage("/ring.png");
-         this.m_imgObj[36] = this.createImage("/save.png");
-         this.m_imgObj[42] = this.createImage("/item.png");
-         this.m_imgObj[109] = this.createImage("/effect.png");
-         this.m_imgObj[9] = this.createImage("/toge.png");
+         this.m_imgObj[RING_SFLAG_RING_18_00] = this.createImage("/ring.png");
+         this.m_imgObj[SAVE_SFLAG] = this.createImage("/save.png");
+         this.m_imgObj[ITEM_NFLAG] = this.createImage("/item.png");
+         this.m_imgObj[EFFECT] = this.createImage("/effect.png");
+         this.m_imgObj[TOGE_NFLAG] = this.createImage("/toge.png");
          if (this.zoneNumber == 0) {
-            this.m_imgObj[3] = this.createImage("/buranko.png");
+            this.m_imgObj[BURANKO_NFLAG] = this.createImage("/buranko.png");
          }
 
          if (this.zoneNumber != 5) {
-            this.m_imgObj[55] = this.createImage("/masin.png");
+            this.m_imgObj[MASIN_NFLAG] = this.createImage("/masin.png");
          }
 
          this.m_imgObj[SJUMP] = this.createImage("/sjump.png");
          this.m_imgObj[1] = this.createImage("/sjump2.png");
          if (this.zoneNumber == 4) {
-            this.m_imgObj[16] = this.createImage("/shima5.png");
+            this.m_imgObj[SHIMA_NFLAG] = this.createImage("/shima5.png");
          } else if (this.zoneNumber == 0) {
-            this.m_imgObj[16] = this.createImage("/shima.png");
+            this.m_imgObj[SHIMA_NFLAG] = this.createImage("/shima.png");
          }
 
          if (this.zoneNumber == 0) {
-            this.m_imgObj[5] = this.createImage("/hashi.png");
-            this.m_imgObj[58] = this.createImage("/jyama.png");
-            this.m_imgObj[6] = this.createImage("/break.png");
-            this.m_imgObj[37] = this.createImage("/kageb.png");
+            this.m_imgObj[HASHI_NFLAG] = this.createImage("/hashi.png");
+            this.m_imgObj[JYAMA_NFLAG] = this.createImage("/jyama.png");
+            this.m_imgObj[BREAK_SFLAG] = this.createImage("/break.png");
+            this.m_imgObj[KAGEB_NFLAG] = this.createImage("/kageb.png");
          }
 
          if (this.zoneNumber == 1) {
             if (this.stageNumber < 3) {
-               this.m_imgObj[83] = this.createImage("/dai3.png");
-               this.m_imgObj[107] = this.createImage("/dai2_0xE0.png");
-               this.m_imgObj[108] = this.createImage("/dai2_0xF0.png");
-               this.m_imgObj[82] = this.createImage("/kazari.png");
-               this.m_imgObj[88] = this.createImage("/kassya.png");
-               this.m_imgObj[84] = this.createImage("/mizu.png");
-               this.m_imgObj[110] = this.createImage("/mizu_0x09.png");
-               this.m_imgObj[80] = this.createImage("/yari.png");
-               this.m_imgObj[85] = this.createImage("/awa.png");
-               this.m_imgObj[104] = this.createImage("/objawa.png");
-               this.m_imgObj[105] = this.createImage("/dai3_0x27.png");
-               this.m_imgObj[106] = this.createImage("/dai3_0x13.png");
-               this.m_imgObj[91] = this.createImage("/bou.png");
-               this.m_imgObj[92] = this.createImage("/ben.png");
+               this.m_imgObj[DAI3_NFLAG] = this.createImage("/dai3.png");
+               this.m_imgObj[DAI2_0xE0] = this.createImage("/dai2_0xE0.png");
+               this.m_imgObj[DAI2_0xF0] = this.createImage("/dai2_0xF0.png");
+               this.m_imgObj[KAZARI_SFLAG] = this.createImage("/kazari.png");
+               this.m_imgObj[KASSYA_NFLAG] = this.createImage("/kassya.png");
+               this.m_imgObj[MIZU_NFLAG] = this.createImage("/mizu.png");
+               this.m_imgObj[MIZU_0x09] = this.createImage("/mizu_0x09.png");
+               this.m_imgObj[YARI_SFLAG] = this.createImage("/yari.png");
+               this.m_imgObj[AWA_NFLAG] = this.createImage("/awa.png");
+               this.m_imgObj[OBJAWA] = this.createImage("/objawa.png");
+               this.m_imgObj[DAI3_0x27] = this.createImage("/dai3_0x27.png");
+               this.m_imgObj[DAI3_0x13] = this.createImage("/dai3_0x13.png");
+               this.m_imgObj[BOU_NFLAG] = this.createImage("/bou.png");
+               this.m_imgObj[BEN_NFLAG] = this.createImage("/ben.png");
                this.m_imgObj[5] = this.createImage("/water.png");
-               this.m_imgObj[111] = this.createImage("/water2.png");
+               this.m_imgObj[WATER2] = this.createImage("/water2.png");
             } else {
-               this.m_imgObj[83] = this.createImage("/z_dai3.png");
-               this.m_imgObj[105] = this.createImage("/z_dai3_0x27.png");
-               this.m_imgObj[106] = this.createImage("/z_dai3_0x13.png");
-               this.m_imgObj[107] = this.createImage("/z_dai2_0xE0.png");
-               this.m_imgObj[108] = this.createImage("/z_dai2_0xF0.png");
-               this.m_imgObj[82] = this.createImage("/z_kazari.png");
-               this.m_imgObj[88] = this.createImage("/kassya.png");
-               this.m_imgObj[84] = this.createImage("/z_mizu.png");
-               this.m_imgObj[110] = this.createImage("/mizu_0x09.png");
-               this.m_imgObj[80] = this.createImage("/yari.png");
-               this.m_imgObj[85] = this.createImage("/awa.png");
-               this.m_imgObj[104] = this.createImage("/objawa.png");
-               this.m_imgObj[91] = this.createImage("/bou.png");
+               this.m_imgObj[DAI3_NFLAG] = this.createImage("/z_dai3.png");
+               this.m_imgObj[DAI3_0x27] = this.createImage("/z_dai3_0x27.png");
+               this.m_imgObj[DAI3_0x13] = this.createImage("/z_dai3_0x13.png");
+               this.m_imgObj[DAI2_0xE0] = this.createImage("/z_dai2_0xE0.png");
+               this.m_imgObj[DAI2_0xF0] = this.createImage("/z_dai2_0xF0.png");
+               this.m_imgObj[KAZARI_SFLAG] = this.createImage("/z_kazari.png");
+               this.m_imgObj[KASSYA_NFLAG] = this.createImage("/kassya.png");
+               this.m_imgObj[MIZU_NFLAG] = this.createImage("/z_mizu.png");
+               this.m_imgObj[MIZU_0x09] = this.createImage("/mizu_0x09.png");
+               this.m_imgObj[YARI_SFLAG] = this.createImage("/yari.png");
+               this.m_imgObj[AWA_NFLAG] = this.createImage("/awa.png");
+               this.m_imgObj[OBJAWA] = this.createImage("/objawa.png");
+               this.m_imgObj[BOU_NFLAG] = this.createImage("/bou.png");
                this.m_imgObj[92] = this.createImage("/z_ben.png");
                this.m_imgObj[5] = this.createImage("/water.png");
-               this.m_imgObj[111] = this.createImage("/water2.png");
+               this.m_imgObj[WATER2] = this.createImage("/water2.png");
             }
          }
 
          if (this.zoneNumber == 2) {
-            this.m_imgObj[79] = this.createImage("/ochi.png");
-            this.m_imgObj[54] = this.createImage("/dai.png");
-            this.m_imgObj[8] = this.createImage("/turi.png");
-            this.m_imgObj[94] = this.createImage("/turi2.png");
-            this.m_imgObj[95] = this.createImage("/turi3.png");
-            this.m_imgObj[13] = this.createImage("/yogan2.png");
-            this.m_imgObj[99] = this.createImage("/yogan22.png");
-            this.m_imgObj[11] = this.createImage("/fblock.png");
-            this.m_imgObj[77] = this.createImage("/yoganc.png");
-            this.m_imgObj[14] = this.createImage("/myogan.png");
-            this.m_imgObj[98] = this.createImage("/myogan2.png");
-            this.m_imgObj[7] = this.createImage("/yuka.png");
-            this.m_imgObj[27] = this.createImage("/bryuka.png");
+            this.m_imgObj[OCHI_NFLAG] = this.createImage("/ochi.png");
+            this.m_imgObj[DAINFLA] = this.createImage("/dai.png");
+            this.m_imgObj[TURI_NFLAG] = this.createImage("/turi.png");
+            this.m_imgObj[TURI2] = this.createImage("/turi2.png");
+            this.m_imgObj[TURI3] = this.createImage("/turi3.png");
+            this.m_imgObj[YOGAN2_SFLAG] = this.createImage("/yogan2.png");
+            this.m_imgObj[YOGAN2] = this.createImage("/yogan22.png");
+            this.m_imgObj[FBLOCK_NFLAG] = this.createImage("/fblock.png");
+            this.m_imgObj[YOGANC_NFLAG] = this.createImage("/yoganc.png");
+            this.m_imgObj[MYOGAN_NFLAG] = this.createImage("/myogan.png");
+            this.m_imgObj[MYOGAN2] = this.createImage("/myogan2.png");
+            this.m_imgObj[YUKA_NFLAG] = this.createImage("/yuka.png");
+            this.m_imgObj[BRYUKA_NFLAG] = this.createImage("/bryuka.png");
          }
 
-         this.m_imgObj[15] = this.createImage("/switch.png");
+         this.m_imgObj[SWITCH2_NFLAG] = this.createImage("/switch.png");
          if (this.zoneNumber == 3) {
-            this.m_imgObj[22] = this.createImage("/fun.png");
+            this.m_imgObj[FUN_NFLAG] = this.createImage("/fun.png");
             this.m_imgObj[BRKABE] = this.createImage("/brkabe.png");
             this.m_imgObj[PEDAL] = this.createImage("/pedal.png");
             this.m_imgObj[STEP] = this.createImage("/step.png");
-            this.m_imgObj[73] = this.createImage("/elev.png");
-            this.m_imgObj[23] = this.createImage("/sisoo.png");
+            this.m_imgObj[ELEV_NFLAG] = this.createImage("/elev.png");
+            this.m_imgObj[SISOO_NFLAG] = this.createImage("/sisoo.png");
          }
 
          if (this.zoneNumber == 4) {
             this.m_imgObj[DAI2] = this.createImage("/dai2.png");
-            this.m_imgObj[61] = this.createImage("/signal.png");
-            this.m_imgObj[56] = this.createImage("/bobin.png");
+            this.m_imgObj[SIGNAL_NFLAG] = this.createImage("/signal.png");
+            this.m_imgObj[BOBIN_SFLAG] = this.createImage("/bobin.png");
          }
 
          if (this.zoneNumber == 5 && this.stageNumber != 3) {
-            this.m_imgObj[PATA] = this.createImage("/paka2.png");
-            this.m_imgObj[33] = this.createImage("/ele.png");
-            this.m_imgObj[28] = this.createImage("/mawaru.png");
-            this.m_imgObj[29] = this.createImage("/yukai.png");
-            this.m_imgObj[32] = this.createImage("/dai4.png");
-            this.m_imgObj[12] = this.createImage("/dai_.png");
+            this.m_imgObj[PATA_NFLAG] = this.createImage("/paka2.png");
+            this.m_imgObj[ELE_NFLAG] = this.createImage("/ele.png");
+            this.m_imgObj[MAWARU_NFLAG] = this.createImage("/mawaru.png");
+            this.m_imgObj[YUKAI_NFLAG] = this.createImage("/yukai.png");
+            this.m_imgObj[DAI4_NFLAG] = this.createImage("/dai4.png");
+            this.m_imgObj[DAI_NFLAG] = this.createImage("/dai_.png");
          }
 
-         this.m_imgObj[26] = this.createImage("/fire6.png");
+         this.m_imgObj[FIRE6_NFLAG] = this.createImage("/fire6.png");
          if (this.zoneNumber == 4) {
-            this.m_imgObj[83] = this.createImage("/dai4_.png");
+            this.m_imgObj[DAI3_NFLAG] = this.createImage("/dai4_.png");
          }
 
-         this.m_imgObj[96] = this.createImage("/tama.png");
-         this.m_imgObj[97] = this.createImage("/bakuhatu.png");
+         this.m_imgObj[TAMA] = this.createImage("/tama.png");
+         this.m_imgObj[BAKUHATU] = this.createImage("/bakuhatu.png");
          this.IkeshitaLoadStageImage(var1);
          this.AraiLoadStageImage(var1);
          DistantBg.setStage(this.zoneNumber, this.stageNumber);
@@ -5755,19 +5755,19 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          int var6 = 0;
          int var7 = 0;
          int var8 = 0;
-         Image var10002;
+         Image playergfx;
          int var10007;
-         int var10008;
-         int var10009;
+         int xpos;
+         int ypos;
          Graphics var10010;
          Graphics var10011;
          if (PlayerSJump) {
-            var10002 = this.m_imgCmd[SONIC_N];
-            var10008 = this.PlayerPosX() - mapView[0];
-            var10009 = this.PlayerPosY() - mapView[1];
+            playergfx = this.m_imgCmd[SONIC_N];
+            xpos = this.PlayerPosX() - mapView[0];
+            ypos = this.PlayerPosY() - mapView[1];
             var10010 = gg;
             var10011 = gg;
-            this.drawRegion(var1, var10002, 240, 80, 40, 45, var2, var10008, var10009, 1 | 32);
+            this.drawRegion(var1, playergfx, 240, 80, 40, 45, var2, xpos, ypos, 1 | 32);
          } else if (PlayerDamage && PlayerJump) {
             if (PlayerParam[12] == 1) {
                var2 = rotNumTable[TRANS_MIRROR - 4];
@@ -5775,51 +5775,51 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                var2 = rotNumTable[TRANS_MIRROR];
             }
 
-            var10002 = this.m_imgCmd[SONIC_N];
-            var10008 = this.PlayerPosX() - mapView[0];
-            var10009 = this.PlayerPosY() - mapView[1] - 5;
+            playergfx = this.m_imgCmd[SONIC_N];
+            xpos = this.PlayerPosX() - mapView[0];
+            ypos = this.PlayerPosY() - mapView[1] - 5;
             var10010 = gg;
             var10011 = gg;
-            this.drawRegion(var1, var10002, 160, 80, 40, 40, var2, var10008, var10009, 1 | 32);
+            this.drawRegion(var1, playergfx, 160, 80, 40, 40, var2, xpos, ypos, 1 | 32);
          } else if (kokyutimer > 0) {
-            var10002 = this.m_imgCmd[SONIC_N];
-            var10008 = this.PlayerPosX() - mapView[0];
-            var10009 = this.PlayerPosY() - mapView[1];
+            playergfx = this.m_imgCmd[SONIC_N];
+            xpos = this.PlayerPosX() - mapView[0];
+            ypos = this.PlayerPosY() - mapView[1];
             var10010 = gg;
             var10011 = gg;
-            this.drawRegion(var1, var10002, 352, 0, 40, 40, var2, var10008, var10009, 1 | 32);
+            this.drawRegion(var1, playergfx, 352, 0, 40, 40, var2, xpos, ypos, 1 | 32);
             --kokyutimer;
          } else {
             int var10003;
             if (PlayerBou) {
-               var10002 = this.m_imgCmd[SONIC_N];
+               playergfx = this.m_imgCmd[SONIC_N];
                var10003 = 144 + 48 * ((this.animeTimer >> 1) % 2);
                var10007 = rotNumTable[TRANS_NONE + 4];
-               var10008 = this.PlayerPosX() - mapView[0];
-               var10009 = this.PlayerPosY() - mapView[1];
+               xpos = this.PlayerPosX() - mapView[0];
+               ypos = this.PlayerPosY() - mapView[1];
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, var10003, 128, 49, 32, var10007, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, var10003, 128, 49, 32, var10007, xpos, ypos, 1 | 32);
                PlayerBou = false;
             } else if (PlayerSWater) {
                if ((this.animeTimer >> 1) % 5 < 3) {
-                  var10002 = this.m_imgCmd[SONIC_N];
+                  playergfx = this.m_imgCmd[SONIC_N];
                   var10003 = 48 * ((this.animeTimer >> 1) % 5);
                   var10007 = rotNumTable[TRANS_NONE];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, var10003, 120, 45, 24, var10007, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, var10003, 120, 45, 24, var10007, xpos, ypos, 1 | 32);
                } else {
-                  var10002 = this.m_imgCmd[SONIC_N];
+                  playergfx = this.m_imgCmd[SONIC_N];
                   var10003 = 240 - 48 * ((this.animeTimer >> 1) % 5);
                   var10007 = rotNumTable[TRANS_NONE + 4];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, var10003, 120, 45, 24, var10007, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, var10003, 120, 45, 24, var10007, xpos, ypos, 1 | 32);
                }
 
                PlayerSWater = false;
@@ -5831,36 +5831,36 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
                var7 = -24 + this.dSin(var4) * 24 / 100;
                var8 = -24 - this.dCos(var4) * 24 / 100;
-               var10002 = this.m_imgCmd[SONIC_N];
+               playergfx = this.m_imgCmd[SONIC_N];
                var10003 = 192 + PlayerParam[11] / plmaxspd / 4 % 5 * 32;
-               var10008 = this.PlayerPosX() - mapView[0] + var5;
-               var10009 = this.PlayerPosY() - mapView[1];
+               xpos = this.PlayerPosX() - mapView[0] + var5;
+               ypos = this.PlayerPosY() - mapView[1];
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, var10003, 0, 32, 40, var2, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, var10003, 0, 32, 40, var2, xpos, ypos, 1 | 32);
             } else if (PlayerWater) {
-               var10002 = this.m_imgCmd[SONIC_N];
+               playergfx = this.m_imgCmd[SONIC_N];
                var10003 = 120 + 40 * (this.animeTimer / 2 % 2);
-               var10008 = this.PlayerPosX() - mapView[0];
-               var10009 = this.PlayerPosY() - mapView[1] - 5;
+               xpos = this.PlayerPosX() - mapView[0];
+               ypos = this.PlayerPosY() - mapView[1] - 5;
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, var10003, 80, 40, 40, var2, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, var10003, 80, 40, 40, var2, xpos, ypos, 1 | 32);
             } else if (PlayerDie) {
                if (this.bressDie) {
-                  var10002 = this.m_imgCmd[SONIC_N];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  playergfx = this.m_imgCmd[SONIC_N];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, 280, 80, 40, 44, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, 280, 80, 40, 44, var2, xpos, ypos, 1 | 32);
                } else {
-                  var10002 = this.m_imgCmd[SONIC_N];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  playergfx = this.m_imgCmd[SONIC_N];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, 200, 80, 40, 44, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, 200, 80, 40, 44, var2, xpos, ypos, 1 | 32);
                }
             } else if (PlayerBall && !PlayerJump) {
                var5 = -16 + this.dSin(var4) * 16 / 100;
@@ -5869,49 +5869,49 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                var8 = -24 - this.dCos(var4) * 24 / 100;
                this.drawRegion(var1, this.m_imgCmd[SONIC_N], 192 + PlayerParam[11] / plmaxspd / 4 % 5 * 32, 10, 32, 30, var2, this.PlayerPosX() - mapView[0] + var5, this.PlayerPosY() - mapView[1] + var6, 20);
             } else if (PlayerCrouch) {
-               var10002 = this.m_imgCmd[SONIC_N];
-               var10008 = this.PlayerPosX() - mapView[0];
-               var10009 = this.PlayerPosY() - mapView[1];
+               playergfx = this.m_imgCmd[SONIC_N];
+               xpos = this.PlayerPosX() - mapView[0];
+               ypos = this.PlayerPosY() - mapView[1];
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, 0, 80, 40, 40, var2, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, 0, 80, 40, 40, var2, xpos, ypos, 1 | 32);
                PlayerCrouch = false;
             } else if (PlayerLookUp) {
-               var10002 = this.m_imgCmd[SONIC_N];
-               var10008 = this.PlayerPosX() - mapView[0];
-               var10009 = this.PlayerPosY() - mapView[1];
+               playergfx = this.m_imgCmd[SONIC_N];
+               xpos = this.PlayerPosX() - mapView[0];
+               ypos = this.PlayerPosY() - mapView[1];
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, 160, 0, 32, 40, var2, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, 160, 0, 32, 40, var2, xpos, ypos, 1 | 32);
                PlayerLookUp = false;
             } else if (this.pushCount > 0) {
-               var10002 = this.m_imgCmd[SONIC_N];
+               playergfx = this.m_imgCmd[SONIC_N];
                var10003 = 288 + this.animeTimer / 4 % 4 * 32;
-               var10008 = this.PlayerPosX() - mapView[0];
-               var10009 = this.PlayerPosY() - mapView[1];
+               xpos = this.PlayerPosX() - mapView[0];
+               ypos = this.PlayerPosY() - mapView[1];
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, var10003, 120, 32, 40, var2, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, var10003, 120, 32, 40, var2, xpos, ypos, 1 | 32);
             } else if (PlayerParam[10] == 0 && !PlayerJump) {
                if (OttotoOn) {
                   if (OttotoSide == 1) {
-                     var10002 = this.m_imgCmd[SONIC_N];
+                     playergfx = this.m_imgCmd[SONIC_N];
                      var10003 = 40 + this.playerStandCount / 8 % 2 * 40;
                      var10007 = rotNumTable[TRANS_NONE];
-                     var10008 = this.PlayerPosX() - mapView[0];
-                     var10009 = this.PlayerPosY() - mapView[1];
+                     xpos = this.PlayerPosX() - mapView[0];
+                     ypos = this.PlayerPosY() - mapView[1];
                      var10010 = gg;
                      var10011 = gg;
-                     this.drawRegion(var1, var10002, var10003, 80, 40, 40, var10007, var10008, var10009, 1 | 32);
+                     this.drawRegion(var1, playergfx, var10003, 80, 40, 40, var10007, xpos, ypos, 1 | 32);
                   } else {
-                     var10002 = this.m_imgCmd[SONIC_N];
+                     playergfx = this.m_imgCmd[SONIC_N];
                      var10003 = 40 + this.playerStandCount / 8 % 2 * 40;
                      var10007 = rotNumTable[TRANS_MIRROR];
-                     var10008 = this.PlayerPosX() - mapView[0];
-                     var10009 = this.PlayerPosY() - mapView[1];
+                     xpos = this.PlayerPosX() - mapView[0];
+                     ypos = this.PlayerPosY() - mapView[1];
                      var10010 = gg;
                      var10011 = gg;
-                     this.drawRegion(var1, var10002, var10003, 80, 40, 40, var10007, var10008, var10009, 1 | 32);
+                     this.drawRegion(var1, playergfx, var10003, 80, 40, 40, var10007, xpos, ypos, 1 | 32);
                   }
                } else if (!raidOn && (olddir <= 22 || olddir >= 338) && (!this.blockColChk_easy(this.PlayerPosX() + 12, this.PlayerPosY()) && !this.blockColChk_easy(this.PlayerPosX() + 12, this.PlayerPosY() + 16) || !this.blockColChk_easy(this.PlayerPosX() - 12, this.PlayerPosY()) && !this.blockColChk_easy(this.PlayerPosX() - 12, this.PlayerPosY() + 16))) {
                   if (!this.blockColChk_easy(this.PlayerPosX() + 12, this.PlayerPosY()) && !this.blockColChk_easy(this.PlayerPosX() + 12, this.PlayerPosY() + 16)) {
@@ -5920,42 +5920,42 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                      var2 = rotNumTable[TRANS_MIRROR];
                   }
 
-                  var10002 = this.m_imgCmd[SONIC_N];
+                  playergfx = this.m_imgCmd[SONIC_N];
                   var10003 = 40 + this.playerStandCount / 8 % 2 * 40;
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, var10003, 80, 40, 40, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, var10003, 80, 40, 40, var2, xpos, ypos, 1 | 32);
                } else if (this.playerStandCount < 75) {
-                  var10002 = this.m_imgCmd[SONIC_N];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  playergfx = this.m_imgCmd[SONIC_N];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, 0, 0, 32, 40, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, 0, 0, 32, 40, var2, xpos, ypos, 1 | 32);
                } else if (this.playerStandCount < 90) {
-                  var10002 = this.m_imgCmd[SONIC_N];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  playergfx = this.m_imgCmd[SONIC_N];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, 32, 0, 32, 40, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, 32, 0, 32, 40, var2, xpos, ypos, 1 | 32);
                } else if (this.playerStandCount < 105) {
-                  var10002 = this.m_imgCmd[SONIC_N];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  playergfx = this.m_imgCmd[SONIC_N];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, 64, 0, 32, 40, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, 64, 0, 32, 40, var2, xpos, ypos, 1 | 32);
                } else {
-                  var10002 = this.m_imgCmd[SONIC_N];
+                  playergfx = this.m_imgCmd[SONIC_N];
                   var10003 = 96 + this.playerStandCount / 8 % 2 * 32;
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - mapView[1];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var1, var10002, var10003, 0, 32, 40, var2, var10008, var10009, 1 | 32);
+                  this.drawRegion(var1, playergfx, var10003, 0, 32, 40, var2, xpos, ypos, 1 | 32);
                }
             } else if (PlayerJump || (PlayerParam[14] != 2 || PlayerParam[10] <= 0 || PlayerParam[12] != 1) && (PlayerParam[14] != 1 || PlayerParam[10] >= 0 || PlayerParam[12] != 0)) {
                int var3;
@@ -6037,13 +6037,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   var2 = rotNumTable[TRANS_MIRROR];
                }
 
-               var10002 = this.m_imgCmd[SONIC_N];
+               playergfx = this.m_imgCmd[SONIC_N];
                var10003 = 360 + PlayerParam[11] / plmaxspd / 4 % 2 * 40;
-               var10008 = this.PlayerPosX() - mapView[0];
-               var10009 = this.PlayerPosY() - mapView[1];
+               xpos = this.PlayerPosX() - mapView[0];
+               ypos = this.PlayerPosY() - mapView[1];
                var10010 = gg;
                var10011 = gg;
-               this.drawRegion(var1, var10002, var10003, 80, 40, 40, var2, var10008, var10009, 1 | 32);
+               this.drawRegion(var1, playergfx, var10003, 80, 40, 40, var2, xpos, ypos, 1 | 32);
             }
          }
 
@@ -6071,23 +6071,23 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                Graphics var10001;
                if (this.animeTimer % 3 == 2) {
                   var10001 = gg;
-                  var10002 = this.m_imgObj[109];
+                  playergfx = this.m_imgObj[109];
                   var10007 = rotNumTable[TRANS_NONE + 4];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - 18 - mapView[1];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - 18 - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var10001, var10002, 48, 48, 48, 48, var10007, var10008, var10009, 1 | 2);
+                  this.drawRegion(var10001, playergfx, 48, 48, 48, 48, var10007, xpos, ypos, 1 | 2);
                } else {
                   var10001 = gg;
-                  var10002 = this.m_imgObj[109];
+                  playergfx = this.m_imgObj[109];
                   int var10004 = 48 * (this.animeTimer % 3);
                   var10007 = rotNumTable[TRANS_NONE];
-                  var10008 = this.PlayerPosX() - mapView[0];
-                  var10009 = this.PlayerPosY() - 18 - mapView[1];
+                  xpos = this.PlayerPosX() - mapView[0];
+                  ypos = this.PlayerPosY() - 18 - mapView[1];
                   var10010 = gg;
                   var10011 = gg;
-                  this.drawRegion(var10001, var10002, 48, var10004, 48, 48, var10007, var10008, var10009, 1 | 2);
+                  this.drawRegion(var10001, playergfx, 48, var10004, 48, 48, var10007, xpos, ypos, 1 | 2);
                }
             } else if (this.animeTimer % 3 == 2) {
                this.drawRegion(gg, this.m_imgObj[109], 48, 48, 48, 48, rotNumTable[TRANS_NONE + 4], this.PlayerPosX() - mapView[0] + var7, this.PlayerPosY() - mapView[1] + var8, 20);
@@ -6290,34 +6290,34 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          if (var2 != 1) {
             int var10000;
             switch(zoneActTable[this.stageNumber][var3 + 5]) {
-            case 0:
+            case RING_SFLAG_RING_18_00:
                var5 += (var2 - 1) * 24;
                break;
-            case 1:
+            case RING_SFLAG_RING_00_18:
                var10000 = var6 + (var2 - 1) * 24;
                break;
-            case 63:
+            case RING_SFLAG_RING_M10_10:
                var5 -= (var2 - 1) * 16;
                var10000 = var6 + (var2 - 1) * 16;
                break;
-            case 64:
+            case RING_SFLAG_RING_10_10:
                var5 += (var2 - 1) * 16;
                var10000 = var6 + (var2 - 1) * 16;
                break;
-            case 65:
+            case RING_SFLAG_RING_20_20:
                var5 += (var2 - 1) * 32;
                var10000 = var6 + (var2 - 1) * 32;
                break;
-            case 66:
+            case RING_SFLAG_RING_10_00:
                var5 += (var2 - 1) * 16;
                break;
-            case 67:
+            case RING_SFLAG_RING_20_00:
                var5 += (var2 - 1) * 32;
                break;
-            case 68:
+            case RING_SFLAG_RING_00_10:
                var10000 = var6 + (var2 - 1) * 16;
                break;
-            case 69:
+            case RING_SFLAG_RING_00_20:
                var10000 = var6 + (var2 - 1) * 32;
             }
 
@@ -6342,45 +6342,45 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             var7[9] = (zoneActTable[this.stageNumber][var3 + 2] & 255) << 8 | zoneActTable[this.stageNumber][var3 + 3] & 255;
             if (var2 != 1) {
                switch(zoneActTable[this.stageNumber][var3 + 5]) {
-               case 0:
+               case RING_SFLAG_RING_18_00:
                   var7[2] += var5 * 24;
                   var7[8] += var5 * 24;
                   break;
-               case 1:
+               case RING_SFLAG_RING_00_18:
                   var7[3] += var5 * 24;
                   var7[9] += var5 * 24;
                   break;
-               case 63:
+               case RING_SFLAG_RING_M10_10:
                   var7[2] -= var5 * 16;
                   var7[8] -= var5 * 16;
                   var7[3] += var5 * 16;
                   var7[9] += var5 * 16;
                   break;
-               case 64:
+               case RING_SFLAG_RING_10_10:
                   var7[2] += var5 * 16;
                   var7[8] += var5 * 16;
                   var7[3] += var5 * 16;
                   var7[9] += var5 * 16;
                   break;
-               case 65:
+               case RING_SFLAG_RING_20_20:
                   var7[2] += var5 * 32;
                   var7[8] += var5 * 32;
                   var7[3] += var5 * 32;
                   var7[9] += var5 * 32;
                   break;
-               case 66:
+               case RING_SFLAG_RING_10_00:
                   var7[2] += var5 * 16;
                   var7[8] += var5 * 16;
                   break;
-               case 67:
+               case RING_SFLAG_RING_20_00:
                   var7[2] += var5 * 32;
                   var7[8] += var5 * 32;
                   break;
-               case 68:
+               case RING_SFLAG_RING_00_10:
                   var7[3] += var5 * 16;
                   var7[9] += var5 * 16;
                   break;
-               case 69:
+               case RING_SFLAG_RING_00_20:
                   var7[3] += var5 * 32;
                   var7[9] += var5 * 32;
                }
@@ -6494,16 +6494,16 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       ObjectList[var2] = var1;
    }
 
-   public int[][] searchObject(int var1, int var2) {
+   public int[][] searchObject(int id, int var2) {
       this.objCount = 0;
       int var3 = 0;
 
-      for(int var4 = 0; var4 < ObjectList.length && var3 < ObjectListNum; ++var4) {
-         if (ObjectList[var4][24] == 1) {
+      for(int objcount = 0; objcount < ObjectList.length && var3 < ObjectListNum; ++objcount) {
+         if (ObjectList[objcount][24] == 1) {
             ++var3;
-            if (ObjectList[var4][1] == var1 && (var2 < 0 || var2 == ObjectList[var4][4])) {
-               this.objTempData[this.objCount] = ObjectList[var4];
-               this.objTempData[this.objCount][23] = var4;
+            if (ObjectList[objcount][1] == id && (var2 < 0 || var2 == ObjectList[objcount][4])) {
+               this.objTempData[this.objCount] = ObjectList[objcount];
+               this.objTempData[this.objCount][23] = objcount;
                ++this.objCount;
             }
          }
@@ -6909,72 +6909,72 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    public void CallObjectMove(int var1) {
       try {
          switch(objectData[1]) {
-         case 0:
+         case RING_SFLAG_RING_18_00:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_18_00_move_ikeshita(var1);
             }
             break;
-         case 1:
+         case RING_SFLAG_RING_00_18:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_00_18_move_ikeshita(var1);
             }
             break;
-         case 2:
+         case SJUMP_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 16, 16)) {
                this.sjump_nflag_move_sakaki(var1);
             }
             break;
-         case 3:
+         case BURANKO_NFLAG:
             this.buranko_nflag_move_ikeshita(var1);
             break;
-         case 4:
+         case THASHI_NFLAG:
             this.thashi_nflag_move_ikeshita(var1);
             break;
-         case 5:
+         case HASHI_NFLAG:
             this.hashi_nflag_move_ikeshita(var1);
             break;
-         case 6:
+         case BREAK_SFLAG:
             this.break_sflag_move_ikeshita(var1);
             break;
-         case 7:
+         case YUKA_NFLAG:
             this.yuka_nflag_move_ikeshita(var1);
             break;
-         case 8:
+         case TURI_NFLAG:
             this.turi_nflag_move_ikeshita(var1);
             break;
-         case 9:
+         case TOGE_NFLAG:
             this.toge_nflag_move_ikeshita(var1);
             break;
-         case 10:
+         case BOX_SFLAG:
             this.box_sflag_move_ikeshita(var1);
             break;
-         case 11:
+         case FBLOCK_NFLAG:
             this.fblock_nflag_move_ikeshita(var1);
-         case 12:
-         case 38:
-         case 47:
-         case 52:
-         case 61:
-         case 76:
-         case 89:
-         case 94:
-         case 95:
-         case 96:
-         case 97:
-         case 98:
-         case 99:
-         case 100:
-         case 101:
-         case 102:
+         case DAI_NFLAG:
+         case BGSPR_NFLAG:
+         case BIGRING_NFLAG:
+         case HAGURUMA_NFLAG:
+         case SIGNAL_NFLAG:
+         case HASHIRA_NFLAG:
+         case TAKI_NFLAG:
+         case TURI2:
+         case TURI3:
+         case TAMA:
+         case BAKUHATU:
+         case MYOGAN2:
+         case YOGAN2:
+         case ANIMAL:
+         case _FIRE:
+         case BLOCK:
          case 103:
-         case 104:
-         case 105:
-         case 106:
-         case 107:
-         case 108:
-         case 109:
-         case 110:
-         case 111:
+         case OBJAWA:
+         case DAI3_0x27:
+         case DAI3_0x13:
+         case DAI2_0xE0:
+         case DAI2_0xF0:
+         case EFFECT:
+         case MIZU_0x09:
+         case WATER2:
          case 112:
          case 113:
          case 114:
@@ -7009,298 +7009,298 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 149:
          default:
             break;
-         case 13:
+         case YOGAN2_SFLAG:
             this.yogan2_sflag_move_ikeshita(var1);
             break;
-         case 14:
+         case MYOGAN_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, -1)) {
                this.myogan_nflag_move_ikeshita(var1);
             }
             break;
-         case 15:
+         case SWITCH2_NFLAG:
             this.switch2_nflag_move_ikeshita(var1);
             break;
-         case 16:
+         case SHIMA_NFLAG:
             this.shima_nflag_move_ikeshita(var1);
             break;
-         case 17:
+         case DAI2_NFLAG:
             this.dai2_nflag_move_ikeshita(var1);
             break;
-         case 18:
+         case BRKABE_SFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 16, 32)) {
                this.brkabe_sflag_move_ikeshita(var1);
             }
             break;
-         case 19:
+         case PEDAL_NFLAG:
             this.pedal_nflag_move_ikeshita(var1);
             break;
-         case 20:
+         case BREAK2_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 16, -1)) {
                this.break2_nflag_move_ikeshita(var1);
             }
             break;
-         case 21:
+         case STEP_NFLAG:
             this.step_nflag_move_ikeshita(var1);
             break;
-         case 22:
+         case FUN_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 96, 64)) {
                this.fun_nflag_move_ikeshita(var1);
             }
             break;
-         case 23:
+         case SISOO_NFLAG:
             this.sisoo_nflag_move_arai(var1);
             break;
-         case 24:
+         case BELT_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 128, 16)) {
                this.belt_nflag_move_ikeshita(var1);
             }
             break;
-         case 25:
+         case PATA_NFLAG:
             this.pata_nflag_move_ikeshita(var1);
             break;
-         case 26:
+         case FIRE6_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 100)) {
                this.fire6_nflag_move_ikeshita(var1);
             }
             break;
-         case 27:
+         case BRYUKA_NFLAG:
             this.bryuka_nflag_move_ikeshita(var1);
             break;
-         case 28:
+         case MAWARU_NFLAG:
             this.mawaru_nflag_move_ikeshita(var1);
             break;
-         case 29:
+         case YUKAI_NFLAG:
             this.yukai_nflag_move_ikeshita(var1);
             break;
-         case 30:
+         case DOOR_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 64)) {
                this.door_nflag_move_ikeshita(var1);
             }
             break;
-         case 31:
+         case YUKAE_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 32)) {
                this.yukae_nflag_move_ikeshita(var1);
             }
             break;
-         case 32:
+         case DAI4_NFLAG:
             this.dai4_nflag_move_ikeshita(var1);
             break;
-         case 33:
+         case ELE_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 16)) {
                this.ele_nflag_move_ikeshita(var1);
             }
             break;
-         case 34:
+         case BELTC_NFLAG:
             this.beltc_nflag_move_ikeshita(var1);
             break;
-         case 35:
+         case NOKO_NFLAG:
             this.noko_nflag_move_ikeshita(var1);
             break;
-         case 36:
+         case SAVE_SFLAG:
             this.save_sflag_move_ikeshita(var1);
             break;
-         case 37:
+         case KAGEB_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, 32)) {
                this.kageb_nflag_move_ikeshita(var1);
             }
             break;
-         case 39:
+         case KAMERE_SFLAG:
             this.kamere_sflag_move_arai(var1);
             break;
-         case 40:
+         case HACHI_SFLAG:
             this.hachi_sflag_move_arai(var1);
             break;
-         case 41:
+         case MUSI_SFLAG:
             this.musi_sflag_move_arai(var1);
             break;
-         case 42:
+         case ITEM_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 16, 16)) {
                this.item_nflag_move_ikeshita(var1);
             }
             break;
-         case 43:
+         case ITEM_SFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 16, 16)) {
                this.item_sflag_move_ikeshita(var1);
             }
             break;
-         case 44:
+         case GOLE_NFLAG:
             this.gole_nflag_move_ikeshita(var1);
             break;
-         case 45:
+         case BTEN_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 32)) {
                this.bten_nflag_move_ikeshita(var1);
             }
             break;
-         case 46:
+         case BTEN_SFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 32)) {
                this.bten_sflag_move_ikeshita(var1);
             }
             break;
-         case 48:
+         case SCOLI_NFLAG:
             this.scoli_nflag_move_ikeshita(var1);
             break;
-         case 49:
+         case IMO_SFLAG:
             this.imo_sflag_move_arai(var1);
             break;
-         case 50:
+         case BROBO_SFLAG:
             this.brobo_sflag_move_arai(var1);
             break;
-         case 51:
+         case BUTA_SFLAG:
             this.buta_sflag_move_arai(var1);
             break;
-         case 53:
+         case SHOOTER_NFLAG:
             this.shooter_nflag_move_ikeshita(var1);
             break;
-         case 54:
+         case DAINFLA:
             this.dainfla_move_ikeshita(var1);
             break;
-         case 55:
+         case MASIN_NFLAG:
             this.masin_nflag_move_ikeshita(var1);
             break;
-         case 56:
+         case BOBIN_SFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 32)) {
                this.bobin_sflag_move_ikeshita(var1);
             }
             break;
-         case 57:
+         case KANI_SFLAG:
             this.kani_sflag_move_arai(var1);
             break;
-         case 58:
+         case JYAMA_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 24, 24)) {
                this.jyama_nflag_move_ikeshita(var1);
             }
             break;
-         case 59:
+         case FETAMA_NFLAG:
             this.fetama_nflag_move_ikeshita(var1);
             break;
-         case 60:
+         case TEKYU_NFLAG:
             this.tekyu_nflag_move_ikeshita(var1);
             break;
-         case 62:
+         case DAI2_SFLAG:
             this.dai2_sflag_move_ikeshita(var1);
             break;
-         case 63:
+         case RING_SFLAG_RING_M10_10:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_m10_10_move_ikeshita(var1);
             }
             break;
-         case 64:
+         case RING_SFLAG_RING_10_10:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_10_10_move_ikeshita(var1);
             }
             break;
-         case 65:
+         case RING_SFLAG_RING_20_20:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_20_20_move_ikeshita(var1);
             }
             break;
-         case 66:
+         case RING_SFLAG_RING_10_00:
             this.ring_sflag_ring_10_00_move_ikeshita(var1);
             break;
-         case 67:
+         case RING_SFLAG_RING_20_00:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_20_00_move_ikeshita(var1);
             }
             break;
-         case 68:
+         case RING_SFLAG_RING_00_10:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_00_10_move_ikeshita(var1);
             }
             break;
-         case 69:
+         case RING_SFLAG_RING_00_20:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 8, -1) || objectData[5] != 0) {
                this.ring_sflag_ring_00_20_move_ikeshita(var1);
             }
             break;
-         case 70:
+         case ARUMA_SFLAG:
             this.aruma_sflag_move_arai(var1);
             break;
-         case 71:
+         case YADO_SFLAG:
             this.yado_sflag_move_arai(var1);
             break;
-         case 72:
+         case ELEV_NFLAG_80:
             this.elev_nflag_80_move_ikeshita(var1);
             break;
-         case 73:
+         case ELEV_NFLAG:
             this.elev_nflag_move_ikeshita(var1);
             break;
-         case 74:
+         case UNI_SFLAG:
             this.uni_sflag_move_arai(var1);
             break;
-         case 75:
+         case MFIRE_NFLAG:
             this.mfire_nflag_move_ikeshita(var1);
             break;
-         case 77:
+         case YOGANC_NFLAG:
             this.yoganc_nflag_move_ikeshita(var1);
             break;
-         case 78:
+         case BAT_SFLAG:
             this.bat_sflag_move_arai(var1);
             break;
-         case 79:
+         case OCHI_NFLAG:
             this.ochi_nflag_move_ikeshita(var1);
             break;
-         case 80:
+         case YARI_SFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 24, 24)) {
                this.yari_sflag_move_ikeshita(var1);
             }
             break;
-         case 81:
+         case MOGURA_SFLAG:
             this.mogura_sflag_move_arai(var1);
             break;
-         case 82:
+         case KAZARI_SFLAG:
             this.kazari_sflag_move_ikeshita(var1);
             break;
-         case 83:
+         case DAI3_NFLAG:
             this.dai3_nflag_move_ikeshita(var1);
             break;
-         case 84:
+         case MIZU_NFLAG:
             this.mizu_nflag_move_sakaki(var1);
             break;
-         case 85:
+         case AWA_NFLAG:
             this.awa_nflag_move_sakaki(var1);
             break;
-         case 86:
+         case FISH_SFLAG:
             this.fish_sflag_move_arai(var1);
             break;
-         case 87:
+         case FISH2_SFLAG:
             this.fish2_sflag_move_arai(var1);
             break;
-         case 88:
+         case KASSYA_NFLAG:
             this.kassya_nflag_move_ikeshita(var1);
             break;
-         case 90:
+         case SHIMA2_NFLAG:
             this.shima2_nflag_move_ikeshita(var1);
             break;
-         case 91:
+         case BOU_NFLAG:
             if (this.ObjectMoveChk(objectData[2], objectData[3], 32, 42)) {
                this.bou_nflag_move_ikeshita(var1);
             }
             break;
-         case 92:
+         case BEN_NFLAG:
             this.ben_nflag_move_sakaki(var1);
             break;
-         case 93:
+         case BEN_SFLAG:
             this.ben_sflag_move_sakaki(var1);
             break;
-         case 120:
+         case BOSS1:
             this.boss1_move_arai(var1);
             break;
-         case 125:
+         case BOSS2:
             this.boss2_move_arai(var1);
             break;
-         case 130:
+         case BOSS3:
             this.boss3_move_arai(var1);
             break;
-         case 135:
+         case BOSS4:
             this.boss4_move_arai(var1);
             break;
-         case 140:
+         case BOSS5:
             this.boss5_move_arai(var1);
             break;
-         case 145:
+         case BOSS6:
             this.boss6_move_arai(var1);
             break;
-         case 150:
+         case BOSS5BLOCK:
             this.MoveBoss5Block(var1);
          }
       } catch (Throwable var3) {
@@ -7311,67 +7311,67 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    public void CallObjectDraw(int var1) {
       try {
          switch(objectData[1]) {
-         case 0:
+         case RING_SFLAG_RING_18_00:
             this.ring_sflag_ring_18_00_draw_ikeshita(var1);
             break;
-         case 1:
+         case RING_SFLAG_RING_00_18:
             this.ring_sflag_ring_00_18_draw_ikeshita(var1);
             break;
-         case 2:
+         case SJUMP_NFLAG:
             this.sjump_nflag_draw_sakaki(var1);
             break;
-         case 3:
+         case BURANKO_NFLAG:
             this.buranko_nflag_draw_ikeshita(var1);
             break;
-         case 4:
+         case THASHI_NFLAG:
             this.thashi_nflag_draw_ikeshita(var1);
             break;
-         case 5:
+         case HASHI_NFLAG:
             this.hashi_nflag_draw_ikeshita(var1);
             break;
-         case 6:
+         case BREAK_SFLAG:
             this.break_sflag_draw_ikeshita(var1);
             break;
-         case 7:
+         case YUKA_NFLAG:
             this.yuka_nflag_draw_ikeshita(var1);
             break;
-         case 8:
+         case TURI_NFLAG:
             this.turi_nflag_draw_ikeshita(var1);
             break;
-         case 9:
+         case TOGE_NFLAG:
             this.toge_nflag_draw_ikeshita(var1);
             break;
-         case 10:
+         case BOX_SFLAG:
             this.box_sflag_draw_ikeshita(var1);
             break;
-         case 11:
+         case FBLOCK_NFLAG:
             this.fblock_nflag_draw_ikeshita(var1);
-         case 12:
-         case 24:
-         case 47:
-         case 48:
-         case 52:
-         case 53:
-         case 76:
-         case 89:
-         case 94:
-         case 95:
-         case 96:
-         case 97:
-         case 98:
-         case 99:
-         case 100:
-         case 101:
-         case 102:
+         case DAI_NFLAG:
+         case BELT_NFLAG:
+         case BIGRING_NFLAG:
+         case SCOLI_NFLAG:
+         case HAGURUMA_NFLAG:
+         case SHOOTER_NFLAG:
+         case HASHIRA_NFLAG:
+         case TAKI_NFLAG:
+         case TURI2:
+         case TURI3:
+         case TAMA:
+         case BAKUHATU:
+         case MYOGAN2:
+         case YOGAN2:
+         case ANIMAL:
+         case _FIRE:
+         case BLOCK:
          case 103:
-         case 104:
-         case 105:
-         case 106:
-         case 107:
-         case 108:
-         case 109:
-         case 110:
-         case 111:
+         case OBJAWA:
+         case DAI3_0x27:
+         case DAI3_0x13:
+         case DAI2_0xE0:
+         case DAI2_0xF0:
+         case EFFECT:
+         case MIZU_0x09:
+         case WATER2:
          case 112:
          case 113:
          case 114:
@@ -7406,247 +7406,247 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 149:
          default:
             break;
-         case 13:
+         case YOGAN2_SFLAG:
             this.yogan2_sflag_draw_ikeshita(var1);
             break;
-         case 14:
+         case MYOGAN_NFLAG:
             this.myogan_nflag_draw_ikeshita(var1);
             break;
-         case 15:
+         case SWITCH2_NFLAG:
             this.switch2_nflag_draw_ikeshita(var1);
             break;
-         case 16:
+         case SHIMA_NFLAG:
             this.shima_nflag_draw_ikeshita(var1);
             break;
-         case 17:
+         case DAI2_NFLAG:
             this.dai2_nflag_draw_ikeshita(var1);
             break;
-         case 18:
+         case BRKABE_SFLAG:
             this.brkabe_sflag_draw_ikeshita(var1);
             break;
-         case 19:
+         case PEDAL_NFLAG:
             this.pedal_nflag_draw_ikeshita(var1);
             break;
-         case 20:
+         case BREAK2_NFLAG:
             this.break2_nflag_draw_ikeshita(var1);
             break;
-         case 21:
+         case STEP_NFLAG:
             this.step_nflag_draw_ikeshita(var1);
             break;
-         case 22:
+         case FUN_NFLAG:
             this.fun_nflag_draw_ikeshita(var1);
             break;
-         case 23:
+         case SISOO_NFLAG:
             this.sisoo_nflag_draw_arai(var1);
             break;
-         case 25:
+         case PATA_NFLAG:
             this.pata_nflag_draw_ikeshita(var1);
             break;
-         case 26:
+         case FIRE6_NFLAG:
             this.fire6_nflag_draw_ikeshita(var1);
             break;
-         case 27:
+         case BRYUKA_NFLAG:
             this.bryuka_nflag_draw_ikeshita(var1);
             break;
-         case 28:
+         case MAWARU_NFLAG:
             this.mawaru_nflag_draw_ikeshita(var1);
             break;
-         case 29:
+         case YUKAI_NFLAG:
             this.yukai_nflag_draw_ikeshita(var1);
             break;
-         case 30:
+         case DOOR_NFLAG:
             this.door_nflag_draw_ikeshita(var1);
             break;
-         case 31:
+         case YUKAE_NFLAG:
             this.yukae_nflag_draw_ikeshita(var1);
             break;
-         case 32:
+         case DAI4_NFLAG:
             this.dai4_nflag_draw_ikeshita(var1);
             break;
-         case 33:
+         case ELE_NFLAG:
             this.ele_nflag_draw_ikeshita(var1);
             break;
-         case 34:
+         case BELTC_NFLAG:
             this.beltc_nflag_draw_ikeshita(var1);
             break;
-         case 35:
+         case NOKO_NFLAG:
             this.noko_nflag_draw_ikeshita(var1);
             break;
-         case 36:
+         case SAVE_SFLAG:
             this.save_sflag_draw_ikeshita(var1);
             break;
-         case 37:
+         case KAGEB_NFLAG:
             this.kageb_nflag_draw_ikeshita(var1);
             break;
-         case 38:
+         case BGSPR_NFLAG:
             this.bgspr_nflag_draw_sakaki(var1);
             break;
-         case 39:
+         case KAMERE_SFLAG:
             this.kamere_sflag_draw_arai(var1);
             break;
-         case 40:
+         case HACHI_SFLAG:
             this.hachi_sflag_draw_arai(var1);
             break;
-         case 41:
+         case MUSI_SFLAG:
             this.musi_sflag_draw_arai(var1);
             break;
-         case 42:
+         case ITEM_NFLAG:
             this.item_nflag_draw_ikeshita(var1);
             break;
-         case 43:
+         case ITEM_SFLAG:
             this.item_sflag_draw_ikeshita(var1);
             break;
-         case 44:
+         case GOLE_NFLAG:
             this.gole_nflag_draw_ikeshita(var1);
             break;
-         case 45:
+         case BTEN_NFLAG:
             this.bten_nflag_draw_ikeshita(var1);
             break;
-         case 46:
+         case BTEN_SFLAG:
             this.bten_sflag_draw_ikeshita(var1);
             break;
-         case 49:
+         case IMO_SFLAG:
             this.imo_sflag_draw_arai(var1);
             break;
-         case 50:
+         case BROBO_SFLAG:
             this.brobo_sflag_draw_arai(var1);
             break;
-         case 51:
+         case BUTA_SFLAG:
             this.buta_sflag_draw_arai(var1);
             break;
-         case 54:
+         case DAINFLA:
             this.dainfla_draw_ikeshita(var1);
             break;
-         case 55:
+         case MASIN_NFLAG:
             this.masin_nflag_draw_ikeshita(var1);
             break;
-         case 56:
+         case BOBIN_SFLAG:
             this.bobin_sflag_draw_ikeshita(var1);
             break;
-         case 57:
+         case KANI_SFLAG:
             this.kani_sflag_draw_arai(var1);
             break;
-         case 58:
+         case JYAMA_NFLAG:
             this.jyama_nflag_draw_ikeshita(var1);
             break;
-         case 59:
+         case FETAMA_NFLAG:
             this.fetama_nflag_draw_ikeshita(var1);
             break;
-         case 60:
+         case TEKYU_NFLAG:
             this.tekyu_nflag_draw_ikeshita(var1);
             break;
-         case 61:
+         case SIGNAL_NFLAG:
             this.signal_nflag_draw_sakaki(var1);
             break;
-         case 62:
+         case DAI2_SFLAG:
             this.dai2_sflag_draw_ikeshita(var1);
             break;
-         case 63:
+         case RING_SFLAG_RING_M10_10:
             this.ring_sflag_ring_m10_10_draw_ikeshita(var1);
             break;
-         case 64:
+         case RING_SFLAG_RING_10_10:
             this.ring_sflag_ring_10_10_draw_ikeshita(var1);
             break;
-         case 65:
+         case RING_SFLAG_RING_20_20:
             this.ring_sflag_ring_20_20_draw_ikeshita(var1);
             break;
-         case 66:
+         case RING_SFLAG_RING_10_00:
             this.ring_sflag_ring_10_00_draw_ikeshita(var1);
             break;
-         case 67:
+         case RING_SFLAG_RING_20_00:
             this.ring_sflag_ring_20_00_draw_ikeshita(var1);
             break;
-         case 68:
+         case RING_SFLAG_RING_00_10:
             this.ring_sflag_ring_00_10_draw_ikeshita(var1);
             break;
-         case 69:
+         case RING_SFLAG_RING_00_20:
             this.ring_sflag_ring_00_20_draw_ikeshita(var1);
             break;
-         case 70:
+         case ARUMA_SFLAG:
             this.aruma_sflag_draw_arai(var1);
             break;
-         case 71:
+         case YADO_SFLAG:
             this.yado_sflag_draw_arai(var1);
             break;
-         case 72:
+         case ELEV_NFLAG_80:
             this.elev_nflag_80_draw_ikeshita(var1);
             break;
-         case 73:
+         case ELEV_NFLAG:
             this.elev_nflag_draw_ikeshita(var1);
             break;
-         case 74:
+         case UNI_SFLAG:
             this.uni_sflag_draw_arai(var1);
             break;
-         case 75:
+         case MFIRE_NFLAG:
             this.mfire_nflag_draw_ikeshita(var1);
             break;
-         case 77:
+         case YOGANC_NFLAG:
             this.yoganc_nflag_draw_ikeshita(var1);
             break;
-         case 78:
+         case BAT_SFLAG:
             this.bat_sflag_draw_arai(var1);
             break;
-         case 79:
+         case OCHI_NFLAG:
             this.ochi_nflag_draw_ikeshita(var1);
             break;
-         case 80:
+         case YARI_SFLAG:
             this.yari_sflag_draw_ikeshita(var1);
             break;
-         case 81:
+         case MOGURA_SFLAG:
             this.mogura_sflag_draw_arai(var1);
             break;
-         case 82:
+         case KAZARI_SFLAG:
             this.kazari_sflag_draw_ikeshita(var1);
             break;
-         case 83:
+         case DAI3_NFLAG:
             this.dai3_nflag_draw_ikeshita(var1);
             break;
-         case 84:
+         case MIZU_NFLAG:
             this.mizu_nflag_draw_sakaki(var1);
             break;
-         case 85:
+         case AWA_NFLAG:
             this.awa_nflag_draw_sakaki(var1);
             break;
-         case 86:
+         case FISH_SFLAG:
             this.fish_sflag_draw_arai(var1);
             break;
-         case 87:
+         case FISH2_SFLAG :
             this.fish2_sflag_draw_arai(var1);
             break;
-         case 88:
+         case KASSYA_NFLAG:
             this.kassya_nflag_draw_ikeshita(var1);
             break;
-         case 90:
+         case SHIMA2_NFLAG:
             this.shima2_nflag_draw_ikeshita(var1);
             break;
-         case 91:
+         case BOU_NFLAG:
             this.bou_nflag_draw_ikeshita(var1);
             break;
-         case 92:
+         case BEN_NFLAG:
             this.ben_nflag_draw_sakaki(var1);
             break;
-         case 93:
+         case BEN_SFLAG:
             this.ben_sflag_draw_sakaki(var1);
             break;
-         case 120:
+         case BOSS1:
             this.boss1_draw_arai(var1);
             break;
-         case 125:
+         case BOSS2:
             this.boss2_draw_arai(var1);
             break;
-         case 130:
+         case BOSS3:
             this.boss3_draw_arai(var1);
             break;
-         case 135:
+         case BOSS4:
             this.boss4_draw_arai(var1);
             break;
-         case 140:
+         case BOSS5:
             this.boss5_draw_arai(var1);
             break;
-         case 145:
+         case BOSS6:
             this.boss6_draw_arai(var1);
             break;
-         case 150:
+         case BOSS5BLOCK:
             this.DrawBoss5Block(false);
          }
       } catch (Throwable var3) {
@@ -10196,48 +10196,48 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
    private void AraiLoadStageImage(int var1) {
       try {
-         this.m_imgObj[100] = this.createImage("/animal.png");
+         this.m_imgObj[ANIMAL] = this.createImage("/animal.png");
          switch(var1) {
          case 2:
-            this.m_imgObj[101] = this.createImage("/fire.png");
-            this.m_imgObj[81] = this.createImage("/mogura.png");
-            this.m_imgObj[87] = this.createImage("/fish2.png");
-            this.m_imgObj[74] = this.createImage("/uni.png");
+            this.m_imgObj[_FIRE] = this.createImage("/fire.png");
+            this.m_imgObj[MOGURA_SFLAG] = this.createImage("/mogura.png");
+            this.m_imgObj[FISH2_SFLAG] = this.createImage("/fish2.png");
+            this.m_imgObj[UNI_SFLAG] = this.createImage("/uni.png");
             break;
          case 3:
-            this.m_imgObj[101] = this.createImage("/fire.png");
-            this.m_imgObj[40] = this.createImage("/hachi.png");
-            this.m_imgObj[49] = this.createImage("/imo.png");
-            this.m_imgObj[78] = this.createImage("/bat.png");
+            this.m_imgObj[_FIRE] = this.createImage("/fire.png");
+            this.m_imgObj[HACHI_SFLAG] = this.createImage("/hachi.png");
+            this.m_imgObj[IMO_SFLAG] = this.createImage("/imo.png");
+            this.m_imgObj[BAT_SFLAG] = this.createImage("/bat.png");
             break;
          case 4:
-            this.m_imgObj[101] = this.createImage("/fire.png");
-            this.m_imgObj[50] = this.createImage("/brobo.png");
-            this.m_imgObj[74] = this.createImage("/uni.png");
+            this.m_imgObj[_FIRE] = this.createImage("/fire.png");
+            this.m_imgObj[BROBO_SFLAG] = this.createImage("/brobo.png");
+            this.m_imgObj[UNI_SFLAG] = this.createImage("/uni.png");
             break;
          case 5:
-            this.m_imgObj[101] = this.createImage("/fire.png");
-            this.m_imgObj[40] = this.createImage("/hachi.png");
-            this.m_imgObj[57] = this.createImage("/kani.png");
-            this.m_imgObj[71] = this.createImage("/yado.png");
-            this.m_imgObj[70] = this.createImage("/aruma.png");
-            this.m_imgObj[102] = this.createImage("/block.png");
+            this.m_imgObj[_FIRE] = this.createImage("/fire.png");
+            this.m_imgObj[HACHI_SFLAG] = this.createImage("/hachi.png");
+            this.m_imgObj[KANI_SFLAG] = this.createImage("/kani.png");
+            this.m_imgObj[YADO_SFLAG] = this.createImage("/yado.png");
+            this.m_imgObj[ARUMA_SFLAG] = this.createImage("/aruma.png");
+            this.m_imgObj[BLOCK] = this.createImage("/block.png");
             break;
          case 6:
             if (this.stageNumber != 3) {
-               this.m_imgObj[101] = this.createImage("/fire.png");
-               this.m_imgObj[49] = this.createImage("/imo.png");
-               this.m_imgObj[50] = this.createImage("/brobo.png");
-               this.m_imgObj[51] = this.createImage("/buta.png");
+               this.m_imgObj[_FIRE] = this.createImage("/fire.png");
+               this.m_imgObj[IMO_SFLAG] = this.createImage("/imo.png");
+               this.m_imgObj[BROBO_SFLAG] = this.createImage("/brobo.png");
+               this.m_imgObj[BUTA_SFLAG] = this.createImage("/buta.png");
             }
          case 7:
             break;
          default:
-            this.m_imgObj[41] = this.createImage("/musi.png");
-            this.m_imgObj[40] = this.createImage("/hachi.png");
-            this.m_imgObj[86] = this.createImage("/fish.png");
-            this.m_imgObj[39] = this.createImage("/kamere.png");
-            this.m_imgObj[57] = this.createImage("/kani.png");
+            this.m_imgObj[MUSI_SFLAG] = this.createImage("/musi.png");
+            this.m_imgObj[HACHI_SFLAG] = this.createImage("/hachi.png");
+            this.m_imgObj[FISH_SFLAG] = this.createImage("/fish.png");
+            this.m_imgObj[KAMERE_SFLAG] = this.createImage("/kamere.png");
+            this.m_imgObj[KANI_SFLAG] = this.createImage("/kani.png");
          }
       } catch (Throwable var3) {
       }
@@ -10564,7 +10564,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
             this.addScoreCount(comboScore);
             this.ShotScore(var1[2], var1[3], comboScore);
-            this.SetObj2(2, var1[2], var1[3], 0, 0, 0, 0);
+            this.SetObj2(OBJ2_KEMURI, var1[2], var1[3], 0, 0, 0, 0);
             this.SetObj2(friendTbl[this.zoneNumber][this.rnd(2)], var1[2], var1[3], 0, -300, 0, 0);
             var1[0] = 0;
             return true;
@@ -10650,7 +10650,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             if (objectData[18] == 0) {
                this.ShotBomb(objectData[6] >> 8, objectData[7] >> 8);
             } else {
-               this.SetObj2(3, objectData[6] >> 8, objectData[7] >> 8, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUDAN, objectData[6] >> 8, objectData[7] >> 8, 0, 0, 0, 0);
             }
 
             objectData[13] = 0;
@@ -11122,7 +11122,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                }
 
                if ((this.animeTimer & 7) == 0) {
-                  this.SetObj2(15, var2[2] - var6 * 20, var2[3] - 2, 0, 0, 0, 0);
+                  this.SetObj2(OBJ2_MUSI_KEMURI, var2[2] - var6 * 20, var2[3] - 2, 0, 0, 0, 0);
                }
             }
 
@@ -11270,11 +11270,11 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             switch(var2[14]) {
             case 3:
                if (var2[5] <= 0) {
-                  this.ShotObj2(13, var2[2], var2[3], 30, 300, 0);
-                  this.ShotObj2(13, var2[2], var2[3], 30, 200, 0);
-                  this.ShotObj2(13, var2[2], var2[3], 330, 300, 0);
-                  this.ShotObj2(13, var2[2], var2[3], 330, 200, 0);
-                  this.SetObj2(1, var2[2], var2[3], 0, 0, 0, 0);
+                  this.ShotObj2(OBJ2_BROBO_TAMA, var2[2], var2[3], 30, 300, 0);
+                  this.ShotObj2(OBJ2_BROBO_TAMA, var2[2], var2[3], 30, 200, 0);
+                  this.ShotObj2(OBJ2_BROBO_TAMA, var2[2], var2[3], 330, 300, 0);
+                  this.ShotObj2(OBJ2_BROBO_TAMA, var2[2], var2[3], 330, 200, 0);
+                  this.SetObj2(OBJ2_BAKUHATU, var2[2], var2[3], 0, 0, 0, 0);
                   var2[0] = 0;
                }
                break;
@@ -11417,7 +11417,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             case 1:
                var2[10] = 0;
                var2[11] = 0;
-               var2[5] = 360;
+               var2[5] = KaniAttackCount;
                var10002 = var2[14]++;
             case 2:
                var2[15] = (this.animeTimer >> 2) % 3;
@@ -11459,117 +11459,117 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    }
 
    private void aruma_sflag_move_arai(int var1) {
-      int[] var2 = objectData;
-      if (!this._CharaDefault(var2)) {
+      int[] arumadata = objectData;
+      if (!this._CharaDefault(arumadata)) {
          int var10002;
-         switch(var2[14]) {
+         switch(arumadata[14]) {
          default:
-            var2[14] = 1;
+            arumadata[14] = 1;
          case 1:
-            var2[15] = -1;
-            var2[8] = 0;
-            var2[9] = 0;
-            var2[10] = 0;
-            var2[11] = 400;
-            var10002 = var2[14]++;
+            arumadata[15] = -1;
+            arumadata[8] = 0;
+            arumadata[9] = 0;
+            arumadata[10] = 0;
+            arumadata[11] = ArumaSpeedY;
+            var10002 = arumadata[14]++;
          case 2:
-            if (this.PlayerPosX() - 160 < var2[2]) {
+            if (this.PlayerPosX() - ArumaStartOffsetX < arumadata[2]) {
                break;
             }
 
-            var10002 = var2[14]++;
+            var10002 = arumadata[14]++;
          case 3:
-            var2[10] = 500;
-            var2[11] = 400;
-            var2[15] = 0;
-            var2[5] = 94;
-            var10002 = var2[14]++;
+            arumadata[10] = ArumaSpeedX;
+            arumadata[11] = ArumaSpeedY;
+            arumadata[15] = 0;
+            arumadata[5] = ArumaRunCount;
+            var10002 = arumadata[14]++;
          case 4:
-            var2[15] = this.animeTimer & 1;
-            var2[10] = 400;
-            if (var2[9] == 0 && this.CheckSlide(var2[2], var2[3], 20, 20, 1)) {
-               var2[9] = 1;
-               var2[11] = -800;
-               var2[5] = 94;
+            arumadata[15] = this.animeTimer & 1;
+            arumadata[10] = ArumaSpeedY;
+            if (arumadata[9] == 0 && this.CheckSlide(arumadata[2], arumadata[3], 20, 20, 1)) {
+               arumadata[9] = 1;
+               arumadata[11] = -800;
+               arumadata[5] = ArumaRunCount;
             }
 
-            if (var2[5] > 0) {
+            if (arumadata[5] > 0) {
                break;
             }
 
-            var2[5] = 94;
-            var10002 = var2[14]++;
+            arumadata[5] = ArumaRunCount;
+            var10002 = arumadata[14]++;
          case 5:
-            var2[10] = 0;
-            var2[11] = 0;
-            var2[15] = 1;
-            var2[5] = 20;
-            var10002 = var2[14]++;
+            arumadata[10] = 0;
+            arumadata[11] = 0;
+            arumadata[15] = 1;
+            arumadata[5] = 20;
+            var10002 = arumadata[14]++;
          case 6:
-            if (var2[5] > 0) {
+            if (arumadata[5] > 0) {
                break;
             }
 
-            var2[15] = 2;
-            var2[5] = 20;
-            var10002 = var2[14]++;
+            arumadata[15] = 2;
+            arumadata[5] = 20;
+            var10002 = arumadata[14]++;
          case 7:
-            if (var2[5] > 0) {
+            if (arumadata[5] > 0) {
                break;
             }
 
-            var2[15] = 3;
-            var2[5] = 60;
-            var10002 = var2[14]++;
+            arumadata[15] = 3;
+            arumadata[5] = 60;
+            var10002 = arumadata[14]++;
          case 8:
-            if (var2[5] > 0) {
+            if (arumadata[5] > 0) {
                break;
             }
 
-            var2[15] = 2;
-            var2[5] = 20;
-            var10002 = var2[14]++;
+            arumadata[15] = 2;
+            arumadata[5] = 20;
+            var10002 = arumadata[14]++;
          case 9:
-            if (var2[5] > 0) {
+            if (arumadata[5] > 0) {
                break;
             }
 
-            var2[15] = 1;
-            var2[5] = 20;
-            var10002 = var2[14]++;
+            arumadata[15] = 1;
+            arumadata[5] = 20;
+            var10002 = arumadata[14]++;
          case 10:
-            if (var2[5] <= 0) {
-               var2[5] = 94;
-               var2[14] = 3;
+            if (arumadata[5] <= 0) {
+               arumadata[5] = ArumaRunCount;
+               arumadata[14] = 3;
             }
          }
 
-         var2[11] += 20;
-         if (var2[11] > 400) {
-            var2[11] = 400;
+         arumadata[11] += 20;
+         if (arumadata[11] > ArumaSpeedY) {
+            arumadata[11] = ArumaSpeedY;
          }
 
-         var2[12] += var2[10];
-         var2[13] += var2[11];
-         if (var2[11] > 0 && this.blockColChk_Enemy(var2[12] / 100, var2[13] / 100 + 12)) {
-            var2[9] = 0;
+         arumadata[12] += arumadata[10];
+         arumadata[13] += arumadata[11];
+         if (arumadata[11] > 0 && this.blockColChk_Enemy(arumadata[12] / 100, arumadata[13] / 100 + 12)) {
+            arumadata[9] = 0;
 
             for(int var3 = 0; var3 < 4; ++var3) {
-               if (this.blockColChk_Enemy(var2[12] / 100, var2[13] / 100 + 12)) {
+               if (this.blockColChk_Enemy(arumadata[12] / 100, arumadata[13] / 100 + 12)) {
                }
 
-               var2[13] -= 100;
+               arumadata[13] -= 100;
             }
 
-            if (var2[13] < 0) {
-               var2[13] = 0;
+            if (arumadata[13] < 0) {
+               arumadata[13] = 0;
             }
          }
 
-         var2[2] = var2[12] / 100;
-         var2[3] = var2[13] / 100;
-         if (var2[15] >= 0) {
-            this.AraiCharaHitCheck(var2);
+         arumadata[2] = arumadata[12] / 100;
+         arumadata[3] = arumadata[13] / 100;
+         if (arumadata[15] >= 0) {
+            this.AraiCharaHitCheck(arumadata);
          }
 
       }
@@ -12241,24 +12241,24 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    }
 
    private void InitObj2() {
-      obj2Data = new int[50][20];
+      obj2Data = new int[OBJ2_MAX][20];
 
-      for(int var1 = 0; var1 < 50; ++var1) {
+      for(int var1 = 0; var1 < OBJ2_MAX; ++var1) {
          obj2Data[var1][0] = 0;
       }
 
    }
 
    private void ClearObj2() {
-      for(int var1 = 0; var1 < 50; ++var1) {
+      for(int var1 = 0; var1 < OBJ2_MAX; ++var1) {
          obj2Data[var1][0] = 0;
       }
 
    }
 
-   private void SetObj2(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
-      if (var1 >= 1) {
-         for(int var9 = 0; var9 < 50; ++var9) {
+   private void SetObj2(int id, int xpos, int ypos, int var4, int var5, int var6, int var7) {
+      if (id >= OBJ2_BAKUHATU) {
+         for(int var9 = 0; var9 < OBJ2_MAX; ++var9) {
             int[] var8 = obj2Data[var9];
             if (var8[0] <= 0) {
                for(int var10 = 4; var10 < 20; ++var10) {
@@ -12266,9 +12266,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                }
 
                var8[0] = 1;
-               var8[1] = var1;
-               var8[2] = var2 * 100;
-               var8[3] = var3 * 100;
+               var8[1] = id;
+               var8[2] = xpos * 100;
+               var8[3] = ypos * 100;
                var8[8] = var7;
                var8[10] = var4;
                var8[11] = var5;
@@ -12280,9 +12280,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       }
    }
 
-   private void SetObj2Ex(int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8, int var9) {
-      if (var1 >= 1) {
-         for(int var11 = 0; var11 < 50; ++var11) {
+   private void SetObj2Ex(int id, int xpos, int ypos, int var4, int var5, int var6, int var7, int var8, int var9) {
+      if (id >= OBJ2_BAKUHATU) {
+         for(int var11 = 0; var11 < OBJ2_MAX; ++var11) {
             int[] var10 = obj2Data[var11];
             if (var10[0] <= 0) {
                for(int var12 = 4; var12 < 20; ++var12) {
@@ -12290,9 +12290,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                }
 
                var10[0] = 1;
-               var10[1] = var1;
-               var10[2] = var2 * 100;
-               var10[3] = var3 * 100;
+               var10[1] = id;
+               var10[2] = xpos * 100;
+               var10[3] = ypos * 100;
                var10[5] = var9;
                var10[8] = var7;
                var10[9] = var8;
@@ -12306,9 +12306,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       }
    }
 
-   private void ShotObj2(int var1, int var2, int var3, int var4, int var5, int var6) {
-      if (var1 >= 1) {
-         for(int var8 = 0; var8 < 50; ++var8) {
+   private void ShotObj2(int id, int xpos, int ypos, int var4, int var5, int var6) {
+      if (id >= OBJ2_BAKUHATU) {
+         for(int var8 = 0; var8 < OBJ2_MAX; ++var8) {
             int[] var7 = obj2Data[var8];
             if (var7[0] <= 0) {
                for(int var9 = 4; var9 < 20; ++var9) {
@@ -12316,9 +12316,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                }
 
                var7[0] = 1;
-               var7[1] = var1;
-               var7[2] = var2 * 100;
-               var7[3] = var3 * 100;
+               var7[1] = id;
+               var7[2] = xpos * 100;
+               var7[3] = ypos * 100;
                var7[8] = var6;
                var7[10] = this.dSin(var4) * var5 / 100;
                var7[11] = this.dCos(var4) * var5 / 100;
@@ -12329,7 +12329,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       }
    }
 
-   private void ShotRing(int var1, int var2, int var3) {
+   private void ShotRing(int xpos, int ypos, int var3) {
       if (var3 > 0) {
          if (var3 > 32) {
             var3 = 32;
@@ -12343,7 +12343,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                var5 = -var5 + 36000;
             }
 
-            this.ShotObj2(4, var1, var2, var5 / 100, 256, 0);
+            this.ShotObj2(OBJ2_RING, xpos, ypos, var5 / 100, 256, 0);
          }
 
          if (var3 > 16) {
@@ -12355,7 +12355,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   var5 = -var5 + 36000;
                }
 
-               this.ShotObj2(4, var1, var2, var5 / 100, 128, 0);
+               this.ShotObj2(OBJ2_RING, xpos, ypos, var5 / 100, 128, 0);
             }
          }
 
@@ -12382,38 +12382,38 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
    }
 
-   private void ShotScore(int var1, int var2, int var3) {
-      if (var3 < 10) {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 0);
-      } else if (var3 < 50) {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 1);
-      } else if (var3 < 100) {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 2);
-      } else if (var3 < 200) {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 3);
-      } else if (var3 < 500) {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 4);
-      } else if (var3 < 1000) {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 5);
+   private void ShotScore(int xpos, int ypos, int score) {
+      if (score < 10) {
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 0);
+      } else if (score < 50) {
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 1);
+      } else if (score < 100) {
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 2);
+      } else if (score < 200) {
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 3);
+      } else if (score < 500) {
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 4);
+      } else if (score < 1000) {
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 5);
       } else {
-         this.SetObj2(6, var1, var2, 0, 0, 0, 6);
+         this.SetObj2(OBJ2_SCORE, xpos, ypos, 0, 0, 0, 6);
       }
 
    }
 
-   private void ShotBomb(int var1, int var2) {
-      this.ShotObj2(13, var1, var2, 30, 200, 0);
-      this.ShotObj2(13, var1, var2, 30, 300, 0);
-      this.ShotObj2(13, var1, var2, 330, 200, 0);
-      this.ShotObj2(13, var1, var2, 330, 300, 0);
-      this.SetObj2(1, var1, var2, 0, 0, 0, 0);
+   private void ShotBomb(int xpos, int ypos) {
+      this.ShotObj2(OBJ2_BROBO_TAMA, xpos, ypos, 30, 200, 0);
+      this.ShotObj2(OBJ2_BROBO_TAMA, xpos, ypos, 30, 300, 0);
+      this.ShotObj2(OBJ2_BROBO_TAMA, xpos, ypos, 330, 200, 0);
+      this.ShotObj2(OBJ2_BROBO_TAMA, xpos, ypos, 330, 300, 0);
+      this.SetObj2(OBJ2_BAKUHATU, xpos, ypos, 0, 0, 0, 0);
    }
 
    private void DebugRect(int var1, int var2, int var3, int var4, int var5) {
    }
 
    private void DriveObj2() {
-      for(int var2 = 0; var2 < 50; ++var2) {
+      for(int var2 = 0; var2 < OBJ2_MAX; ++var2) {
          int[] var1 = obj2Data[var2];
          if (var1[0] > 0) {
             if (Math.abs(var1[2] / 100 - this.PlayerPosX()) <= 320 && Math.abs(var1[3] / 100 - this.PlayerPosY()) <= 260 && var1[6] <= 600) {
@@ -12434,109 +12434,109 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
    private void CallObj2(int[] var1) {
       switch(var1[1]) {
-      case 1:
+      case OBJ2_BAKUHATU:
          this.MoveBakuhatu(var1);
          break;
-      case 2:
+      case OBJ2_KEMURI:
          this.MoveBakuhatu(var1);
          break;
-      case 3:
+      case OBJ2_BAKUDAN:
          this.MoveBakudan(var1);
          break;
-      case 4:
+      case OBJ2_RING:
          this.MoveRing(var1);
          break;
-      case 5:
+      case OBJ2_KIRA:
          this.MoveKira(var1);
          break;
-      case 6:
+      case OBJ2_SCORE:
          this.MoveScore(var1);
          break;
-      case 7:
+      case OBJ2_TAMA:
          this.MoveNormalTama(var1);
          break;
-      case 8:
+      case OBJ2_HACHI_TAMA:
          this.MoveHachiTama(var1);
          break;
-      case 9:
+      case OBJ2_KANI_TAMA:
          this.MoveKaniTama(var1);
          break;
-      case 10:
+      case OBJ2_BUTA_TAMA:
          this.MoveButaTama(var1);
          break;
-      case 11:
+      case OBJ2_UNI_TAMA:
          this.MoveUniTama(var1);
          break;
-      case 12:
+      case OBJ2_UNI2_TAMA:
          this.MoveUni2Tama(var1);
          break;
-      case 13:
+      case OBJ2_BROBO_TAMA:
          this.MoveBroboTama(var1);
          break;
-      case 14:
+      case OBJ2_IMO_TAMA:
          this.MoveImoTama(var1);
          break;
-      case 15:
+      case OBJ2_MUSI_KEMURI:
          this.MoveMusiKemuri(var1);
          break;
-      case 16:
+      case OBJ2_FIREBALL:
          this.MoveFireball(var1);
          break;
-      case 17:
+      case OBJ2_FIREBALL2:
          this.MoveFireball2(var1);
          break;
-      case 18:
+      case OBJ2_FIREBALL3:
          this.MoveFireball3(var1);
          break;
-      case 19:
+      case OBJ2_FIREBALL4:
          this.MoveFireball4(var1);
          break;
-      case 20:
+      case OBJ2_FIREBALL5:
          this.MoveFireball5(var1);
          break;
-      case 21:
+      case OBJ2_KAZARIFIRE:
          this.MoveKazarifire(var1);
          break;
-      case 22:
+      case OBJ2_DBLOCK:
          this.MoveDBlock(var1);
          break;
-      case 23:
+      case OBJ2_DBLOCK2:
          this.MoveDBlock(var1);
          break;
-      case 24:
+      case OBJ2_DBLOCK3:
          this.MoveDBlock(var1);
          break;
-      case 25:
+      case OBJ2_DBLOCK4:
          this.MoveDBlock(var1);
          break;
-      case 26:
+      case OBJ2_BRKABE_G:
          this.MoveDBlock(var1);
          break;
-      case 27:
+      case OBJ2_BOSS6_TAMA:
          this.MoveBoss6Tama(var1);
          break;
-      case 28:
+      case OBJ2_FRIC:
          this.MoveAnimal(var1);
          break;
-      case 29:
+      case OBJ2_AZARASI:
          this.MoveAnimal(var1);
          break;
-      case 30:
+      case OBJ2_NIWATORI:
          this.MoveAnimal(var1);
          break;
-      case 31:
+      case OBJ2_USAGI:
          this.MoveAnimal(var1);
          break;
-      case 32:
+      case OBJ2_PENGUIN:
          this.MoveAnimal(var1);
          break;
-      case 33:
+      case OBJ2_RISU:
          this.MoveAnimal(var1);
          break;
-      case 34:
+      case OBJ2_BUTA:
          this.MoveAnimal(var1);
          break;
-      case 35:
+      case OBJ2_DEBUG:
          this.MoveObj2Debug(var1);
       }
 
@@ -12545,114 +12545,114 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    private void DrawObj2() {
       int var2 = 0;
 
-      for(int var3 = 0; var3 < 50; ++var3) {
+      for(int var3 = 0; var3 < OBJ2_MAX; ++var3) {
          int[] var1 = obj2Data[var3];
          if (var1[0] > 0) {
             ++var2;
             switch(var1[1]) {
-            case 1:
+            case OBJ2_BAKUHATU:
                this.DrawBakuhatu(var1);
                break;
-            case 2:
+            case OBJ2_KEMURI:
                this.DrawBakuhatu(var1);
                break;
-            case 3:
+            case OBJ2_BAKUDAN:
                this.DrawBakuhatu(var1);
                break;
-            case 4:
+            case OBJ2_RING:
                this.DrawRing(var1);
                break;
-            case 5:
+            case OBJ2_KIRA:
                this.DrawKira(var1);
                break;
-            case 6:
+            case OBJ2_SCORE:
                this.DrawScore(var1);
                break;
-            case 7:
+            case OBJ2_TAMA:
                this.DrawTama(var1);
                break;
-            case 8:
+            case OBJ2_HACHI_TAMA:
                this.DrawTama(var1);
                break;
-            case 9:
+            case OBJ2_KANI_TAMA:
                this.DrawTama(var1);
                break;
-            case 10:
+            case OBJ2_BUTA_TAMA:
                this.DrawTama(var1);
                break;
-            case 11:
+            case OBJ2_UNI_TAMA:
                this.DrawTama(var1);
                break;
-            case 12:
+            case OBJ2_UNI2_TAMA:
                this.DrawTama(var1);
                break;
-            case 13:
+            case OBJ2_BROBO_TAMA:
                this.DrawTama(var1);
                break;
-            case 14:
+            case OBJ2_IMO_TAMA:
                this.DrawImoTama(var1);
                break;
-            case 15:
+            case OBJ2_MUSI_KEMURI:
                this.DrawMusiKemuri(var1);
                break;
-            case 16:
+            case OBJ2_FIREBALL:
                this.DrawFireball(var1);
                break;
-            case 17:
+            case OBJ2_FIREBALL2:
                this.DrawFireball(var1);
                break;
-            case 18:
+            case OBJ2_FIREBALL3:
                this.DrawFireball(var1);
                break;
-            case 19:
+            case OBJ2_FIREBALL4:
                this.DrawFireball(var1);
                break;
-            case 20:
+            case OBJ2_FIREBALL5:
                this.DrawFireball(var1);
                break;
-            case 21:
+            case OBJ2_KAZARIFIRE:
                this.DrawKazarifire(var1);
                break;
-            case 22:
+            case OBJ2_DBLOCK:
                this.DrawDBlock(var1);
                break;
-            case 23:
+            case OBJ2_DBLOCK2:
                this.DrawDBlock(var1);
                break;
-            case 24:
+            case OBJ2_DBLOCK3:
                this.DrawDBlock(var1);
                break;
-            case 25:
+            case OBJ2_DBLOCK4:
                this.DrawDBlock(var1);
                break;
-            case 26:
+            case OBJ2_BRKABE_G:
                this.DrawBrkabe(var1);
                break;
-            case 27:
+            case OBJ2_BOSS6_TAMA:
                this.DrawBoss6Tama(var1);
                break;
-            case 28:
+            case OBJ2_FRIC:
                this.DrawAnimal(var1);
                break;
-            case 29:
+            case OBJ2_AZARASI:
                this.DrawAnimal(var1);
                break;
-            case 30:
+            case OBJ2_NIWATORI:
                this.DrawAnimal(var1);
                break;
-            case 31:
+            case OBJ2_USAGI:
                this.DrawAnimal(var1);
                break;
-            case 32:
+            case OBJ2_PENGUIN:
                this.DrawAnimal(var1);
                break;
-            case 33:
+            case OBJ2_RISU:
                this.DrawAnimal(var1);
                break;
-            case 34:
+            case OBJ2_BUTA:
                this.DrawAnimal(var1);
                break;
-            case 35:
+            case OBJ2_DEBUG:
                this.DrawObj2Debug(var1);
             }
          }
@@ -12688,18 +12688,18 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       int var2 = var1[2];
       int var3 = var1[3];
       int var4 = var1[11];
-      int var5 = var1[2] / 100;
-      int var6 = var1[3] / 100;
-      if (this.IsHitSonic(var5, var6, 12, 12, false) != 0) {
-         this.SetObj2(5, var5, var6, 0, 0, 0, 0);
+      int xpos = var1[2] / 100;
+      int ypos = var1[3] / 100;
+      if (this.IsHitSonic(xpos, ypos, 12, 12, false) != 0) {
+         this.SetObj2(OBJ2_KIRA, xpos, ypos, 0, 0, 0, 0);
          ++ringcount;
          var1[0] = 0;
       } else {
          int var7;
          if (var4 > 0) {
-            if (this.blockColChk_Enemy(var5, var6 + 4)) {
+            if (this.blockColChk_Enemy(xpos, ypos + 4)) {
                var7 = (blockLinkTable[this.enemyBlock] & 255) << 4;
-               var6 = (var6 & -16) + (16 - Math.abs(scdtblwk[var7 + (var5 & 15)]));
+               ypos = (ypos & -16) + (16 - Math.abs(scdtblwk[var7 + (xpos & 15)]));
                var4 = -(var4 >> 1);
             } else {
                var4 += 6;
@@ -12707,10 +12707,10 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   var4 = 500;
                }
             }
-         } else if (this.blockColChk_Enemy(var5, var6 - 4)) {
+         } else if (this.blockColChk_Enemy(xpos, ypos - 4)) {
             for(var7 = 0; var7 < 3; ++var7) {
-               ++var6;
-               if (!this.blockColChk_Enemy(var5, var6 - 4)) {
+               ++ypos;
+               if (!this.blockColChk_Enemy(xpos, ypos - 4)) {
                   break;
                }
             }
@@ -12723,13 +12723,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             }
          }
 
-         if (var6 < 0) {
-            var6 = 0;
-         } else if (var6 > 99999) {
+         if (ypos < 0) {
+            ypos = 0;
+         } else if (ypos > 99999) {
             var1[0] = 0;
          }
 
-         var1[3] = var6 * 100;
+         var1[3] = ypos * 100;
          var1[11] = var4;
          if (var1[6] > 300) {
             var1[0] = 0;
@@ -13016,8 +13016,8 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             break;
          }
 
-         this.SetObj2(18, var1[2] / 100, var1[3] / 100, 0, 0, 0, 0);
-         this.SetObj2(18, var1[2] / 100, var1[3] / 100, 0, 0, 1, 0);
+         this.SetObj2(OBJ2_FIREBALL3, var1[2] / 100, var1[3] / 100, 0, 0, 0, 0);
+         this.SetObj2(OBJ2_FIREBALL3, var1[2] / 100, var1[3] / 100, 0, 0, 1, 0);
          var1[11] = 0;
          var1[5] = 13;
          int var10002 = var1[14]++;
@@ -13066,9 +13066,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          if (var1[6] % 24 == 0 && var1[9] > 0) {
             var10002 = var1[9]--;
             if (var1[8] == 0) {
-               this.SetObj2(19, var1[2] / 100, var1[3] / 100, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_FIREBALL4, var1[2] / 100, var1[3] / 100, 0, 0, 0, 0);
             } else if (var1[8] == 1) {
-               this.SetObj2(19, var1[2] / 100, var1[3] / 100, 0, 0, 0, 999);
+               this.SetObj2(OBJ2_FIREBALL4, var1[2] / 100, var1[3] / 100, 0, 0, 0, 999);
             }
          }
 
@@ -13683,40 +13683,40 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
    }
 
-   private void initBossData(int var1) {
+   private void initBossData(int zone) {
       try {
-         int[] var4 = new int[25];
+         int[] bossdata = new int[25];
 
          int var2;
-         for(var2 = 0; var2 < var4.length; ++var2) {
-            var4[var2] = 0;
+         for(var2 = 0; var2 < bossdata.length; ++var2) {
+            bossdata[var2] = 0;
          }
 
          this.InitBoss();
-         if (var1 == 0) {
-            this.m_imgObj[120] = this.createImage("boss.png");
+         if (zone == 0) {
+            this.m_imgObj[BOSS1] = this.createImage("boss.png");
             this.m_imgObj[121] = this.createImage("bossball.png");
-            var4[1] = 120;
+            bossdata[1] = BOSS1;
             this.bossOriginX = 10752;
             this.bossOriginY = 808;
-         } else if (var1 == 1) {
-            this.m_imgObj[120] = this.createImage("boss.png");
-            var4[1] = 125;
+         } else if (zone == 1) {
+            this.m_imgObj[BOSS1] = this.createImage("boss.png");
+            bossdata[1] = BOSS2;
             this.bossOriginX = 0;
             this.bossOriginY = 0;
             this.bossPosX = 769600;
             this.bossPosY = 147200;
-         } else if (var1 == 2) {
-            this.m_imgObj[120] = this.createImage("boss.png");
+         } else if (zone == 2) {
+            this.m_imgObj[BOSS1] = this.createImage("boss.png");
             this.m_imgObj[131] = this.createImage("fire.png");
-            var4[1] = 130;
+            bossdata[1] = BOSS3;
             this.bossOriginX = 6304;
             this.bossOriginY = 608;
             this.bossPosX = (6640 - this.bossOriginX) * 100;
             this.bossPosY = (544 - this.bossOriginY) * 100;
-         } else if (var1 == 3) {
-            this.m_imgObj[120] = this.createImage("boss.png");
-            var4[1] = 135;
+         } else if (zone == 3) {
+            this.m_imgObj[BOSS1] = this.createImage("boss.png");
+            bossdata[1] = BOSS4;
             this.bossOriginX = 8352;
             this.bossOriginY = 576;
             this.bossPosX = 0;
@@ -13727,7 +13727,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             }
 
             boolean var3 = false;
-            int[][] var5 = this.searchObject(23, 255);
+            int[][] var5 = this.searchObject(SISOO_NFLAG, 255);
 
             for(var2 = 0; var2 < var5.length; ++var2) {
                ObjectAct[var5[var2][20]] = true;
@@ -13746,41 +13746,41 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                boss4Sisoo[var6][2] = (short)(var6 == 2 ? 20 : -20);
                boss4Sisoo[var6][3] = 0;
             }
-         } else if (var1 == 4) {
+         } else if (zone == 4) {
             this.PreInitBoss5();
             this.m_imgObj[120] = this.createImage("boss.png");
-            var4[1] = 140;
+            bossdata[1] = 140;
             this.bossPosX = 0;
             this.bossPosY = 0;
-         } else if (var1 == 5) {
+         } else if (zone == 5) {
             for(var2 = 0; var2 < 150; ++var2) {
                this.m_imgObj[var2] = null;
             }
 
             this.DoGc();
-            this.m_imgObj[0] = this.createImage("/ring.png");
-            this.m_imgObj[97] = this.createImage("/bakuhatu.png");
+            this.m_imgObj[RING_SFLAG_RING_18_00] = this.createImage("/ring.png");
+            this.m_imgObj[BAKUHATU] = this.createImage("/bakuhatu.png");
             this.m_imgObj[84] = this.createImage("/beltcon.png");
-            this.m_imgObj[120] = this.createImage("boss.png");
-            this.m_imgObj[145] = this.createImage("boss6.png");
+            this.m_imgObj[BOSS1] = this.createImage("boss.png");
+            this.m_imgObj[BOSS6] = this.createImage("boss6.png");
             this.m_imgObj[146] = this.createImage("eggman.png");
             this.m_imgObj[147] = this.createImage("boss2.png");
-            var4[1] = 145;
+            bossdata[1] = 145;
             this.bossOriginX = 1272;
             this.bossOriginY = 120;
             this.bossPosX = 0;
             this.bossPosY = 0;
          }
 
-         var4[0] = 1;
-         var4[2] = var4[16] = mapView[0] + 256 + 46;
-         var4[3] = var4[17] = mapView[1] + 46;
-         var4[4] = 0;
-         var4[14] = 0;
-         var4[20] = ObjectAct.length - 1;
-         ObjectAct[var4[20]] = true;
-         ObjectDead[var4[20]] = false;
-         this.addObject(var4);
+         bossdata[0] = 1;
+         bossdata[2] = bossdata[16] = mapView[0] + 256 + 46;
+         bossdata[3] = bossdata[17] = mapView[1] + 46;
+         bossdata[4] = 0;
+         bossdata[14] = 0;
+         bossdata[20] = ObjectAct.length - 1;
+         ObjectAct[bossdata[20]] = true;
+         ObjectDead[bossdata[20]] = false;
+         this.addObject(bossdata);
       } catch (Exception var7) {
       }
 
@@ -14043,19 +14043,19 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       switch(this.bossStep) {
       case 6:
          this.bossAnim = 2;
-         this.bossPosX -= 100;
+         this.bossPosX -= Boss1Speed;
          this.bossAngle += this.bossParam2;
-         this.bossAngle2 += 100;
-         if (this.bossPosX > -3200) {
+         this.bossAngle2 += Boss1FurikoSpeed;
+         if (this.bossPosX > -Boss1MoveWidth) {
             break;
          }
 
-         this.bossPosX = -3200;
+         this.bossPosX = -Boss1MoveWidth;
          ++this.bossStep;
       case 7:
          this.bossAnim = 0;
          this.bossDir = 1;
-         this.bossAngle2 += 100;
+         this.bossAngle2 += Boss1FurikoSpeed;
          if (this.bossParam2 < 0) {
             this.bossAngle += this.bossParam2;
             if (this.bossAngle < -9000) {
@@ -14076,19 +14076,19 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
       case 8:
          this.bossAnim = 2;
-         this.bossPosX += 100;
+         this.bossPosX += Boss1Speed;
          this.bossAngle += this.bossParam2;
-         this.bossAngle2 += 100;
-         if (this.bossPosX < 3200 || this.bossCount > 0) {
+         this.bossAngle2 += Boss1FurikoSpeed;
+         if (this.bossPosX < Boss1MoveWidth || this.bossCount > 0) {
             break;
          }
 
-         this.bossPosX = 3200;
+         this.bossPosX = Boss1MoveWidth;
          ++this.bossStep;
       case 9:
          this.bossAnim = 0;
          this.bossDir = 0;
-         this.bossAngle2 += 100;
+         this.bossAngle2 += Boss1FurikoSpeed;
          if (this.bossParam2 > 0) {
             this.bossAngle += this.bossParam2;
             if (this.bossAngle > 9000) {
@@ -14194,7 +14194,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          ++this.bossStep;
       case 3:
          this.bossAnim = 2;
-         this.bossPosX -= 100;
+         this.bossPosX -= Boss1Speed;
          if (this.bossCount > 0) {
             break;
          }
@@ -14212,51 +14212,51 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          this.bossAnim = 2;
          this.bossPosX -= 50;
          this.bossAngle += this.bossParam2;
-         this.bossAngle2 += 100;
-         if (this.bossPosX <= -3200) {
-            this.bossPosX = -3200;
+         this.bossAngle2 += Boss1FurikoSpeed;
+         if (this.bossPosX <= -Boss1MoveWidth) {
+            this.bossPosX = -Boss1MoveWidth;
             this.bossStep = 6;
          }
       }
 
    }
 
-   private boolean moveBoss2Point(int var1, int var2, int var3, int var4) {
-      if (Math.abs(var1 - this.bossPosX) > var3) {
-         if (var1 > this.bossPosX) {
-            this.bossPosX += var3;
+   private boolean moveBoss2Point(int xpos, int ypos, int xspeed, int yspeed) {
+      if (Math.abs(xpos - this.bossPosX) > xspeed) {
+         if (xpos > this.bossPosX) {
+            this.bossPosX += xspeed;
          } else {
-            this.bossPosX -= var3;
+            this.bossPosX -= xspeed;
          }
       } else {
-         this.bossPosX = var1;
+         this.bossPosX = xpos;
       }
 
-      if (Math.abs(var2 - this.bossPosY) > var4) {
-         if (var2 > this.bossPosY) {
-            this.bossPosY += var4;
+      if (Math.abs(ypos - this.bossPosY) > yspeed) {
+         if (ypos > this.bossPosY) {
+            this.bossPosY += yspeed;
          } else {
-            this.bossPosY -= var4;
+            this.bossPosY -= yspeed;
          }
       } else {
-         this.bossPosY = var2;
+         this.bossPosY = ypos;
       }
 
-      return Math.abs(this.bossPosX - var1) < 200 && Math.abs(this.bossPosY - var2) < 200;
+      return Math.abs(this.bossPosX - xpos) < 200 && Math.abs(this.bossPosY - ypos) < 200;
    }
 
    private void boss2_move_arai(int var1) {
-      int[] var2 = objectData;
-      this._BossDefault(var2);
+      int[] bossdata = objectData;
+      this._BossDefault(bossdata);
       this.bossAngle2 += 200;
       this.bossOfsX = 0;
       this.bossOfsY = this.dSin(this.bossAngle2 / 100) * 8;
-      this.UpdateBossPos(var2);
-      int var5 = var2[2] - this.PlayerPosX();
-      int var6 = var2[3] - (this.PlayerPosY() - 16);
-      int var9 = var5 * var5 + var6 * var6;
+      this.UpdateBossPos(bossdata);
+      int xdistance = bossdata[2] - this.PlayerPosX();
+      int ydistance = bossdata[3] - (this.PlayerPosY() - 16);
+      int distance = xdistance * xdistance + ydistance * ydistance;
       if (this.isHitBoss()) {
-         this.boundBossHit(var2[2], var2[3], 8);
+         this.boundBossHit(bossdata[2], bossdata[3], 8);
          if (this.bossFlash == 0 && this.bossStep < 100) {
             this.bossFace = 3;
             this.bossFlash = this.bossFaceCount = 60;
@@ -14265,7 +14265,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
       switch(this.bossStep) {
       case 4:
-         if (var9 > 4096 && var2[3] < this.PlayerPosY() - 16) {
+         if (distance > 4096 && bossdata[3] < this.PlayerPosY() - 16) {
             break;
          }
 
@@ -14276,7 +14276,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
          break;
       case 6:
-         if (var9 > 6400 && var2[3] < this.PlayerPosY() - 16) {
+         if (distance > 6400 && bossdata[3] < this.PlayerPosY() - 16) {
             break;
          }
 
@@ -14287,7 +14287,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
          break;
       case 8:
-         if (var9 > 6400 && var2[3] < this.PlayerPosY() - 16) {
+         if (distance > 6400 && bossdata[3] < this.PlayerPosY() - 16) {
             break;
          }
 
@@ -14298,7 +14298,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
          break;
       case 10:
-         if (var9 > 6400) {
+         if (distance > 6400) {
             break;
          }
 
@@ -14352,7 +14352,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          this.bossAngle = 0;
          this.bossAngle2 = 0;
          ++this.bossStep;
-         if (var9 > 4096) {
+         if (distance > 4096) {
             break;
          }
 
@@ -14394,7 +14394,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
             if (boss3FireCount > 0 && --boss3FireCount == 0) {
                boss3FireCount = 150 + this.rnd(150);
-               this.SetObj2(16, this.bossOriginX + this.rnd(40) - 20, this.bossOriginY + 130, 0, -300, 0, 1);
+               this.SetObj2(OBJ2_FIREBALL, this.bossOriginX + this.rnd(40) - 20, this.bossOriginY + 130, 0, -300, 0, 1);
             }
 
             switch(this.bossStep) {
@@ -14405,8 +14405,8 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             case 5:
                this.bossAnim = 2;
                this.bossDir = 0;
-               this.bossPosX -= 150;
-               this.bossPosY -= 12;
+               this.bossPosX -= boss3SpeedX;
+               this.bossPosY -= boss3FloatSpeed;
                if (this.bossPosX > -10400) {
                   break;
                }
@@ -14414,7 +14414,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                this.bossPosX = -10400;
                ++this.bossStep;
             case 6:
-               this.bossPosY += 50;
+               this.bossPosY += boss3DownSpeed;
                if (this.bossPosY <= 1200) {
                   break;
                }
@@ -14424,11 +14424,11 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             case 7:
                this.bossFace = 1;
                this.bossFaceCount = 60;
-               this.bossCount = 48;
+               this.bossCount = boss3AttackWait;
                ++this.bossStep;
             case 8:
                if (this.bossCount == 8) {
-                  this.SetObj2(17, var2[2], var2[3] + 16, 0, 0, 0, 0);
+                  this.SetObj2(OBJ2_FIREBALL2, var2[2], var2[3] + 16, 0, 0, 0, 0);
                }
 
                if (this.bossCount <= 0) {
@@ -14443,8 +14443,8 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             case 10:
                this.bossAnim = 2;
                this.bossDir = 1;
-               this.bossPosX += 150;
-               this.bossPosY -= 12;
+               this.bossPosX += boss3SpeedX;
+               this.bossPosY -= boss3FloatSpeed;
                if (this.bossPosX < 10400) {
                   break;
                }
@@ -14452,7 +14452,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                this.bossPosX = 10400;
                ++this.bossStep;
             case 11:
-               this.bossPosY += 50;
+               this.bossPosY += boss3DownSpeed;
                if (this.bossPosY <= 1200) {
                   break;
                }
@@ -14462,11 +14462,11 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             case 12:
                this.bossFace = 1;
                this.bossFaceCount = 60;
-               this.bossCount = 48;
+               this.bossCount = boss3AttackWait;
                ++this.bossStep;
             case 13:
                if (this.bossCount == 8) {
-                  this.SetObj2(17, var2[2], var2[3] + 16, 0, 0, 0, 0);
+                  this.SetObj2(OBJ2_FIREBALL2, var2[2], var2[3] + 16, 0, 0, 0, 0);
                }
 
                if (this.bossCount > 0) {
@@ -14502,7 +14502,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                ++this.bossStep;
             case 3:
                this.bossAnim = 2;
-               this.bossPosX -= 150;
+               this.bossPosX -= boss3SpeedX;
                this.bossPosY -= 20;
                if (this.bossPosX <= 10400 && this.bossCount <= 0) {
                   this.bossPosX = 10400;
@@ -14536,7 +14536,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          var3[11] = 70;
          var3[12] = 0;
          var3[13] = 1;
-         var3[14] = 240;
+         var3[14] = Boss4BakuhatuCount;
          this.InsertObject(var3, var2);
       }
 
@@ -14560,7 +14560,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                var3[13] = 0;
                var3[14] = 0;
                this.InsertObject(var3, var2);
-               this.SetObj2(1, var5, var6, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUHATU, var5, var6, 0, 0, 0, 0);
                return true;
             }
          }
@@ -14587,7 +14587,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          int var6 = boss4Sisoo[1][1] * 100;
          int var7 = boss4Sisoo[2][1] * 100;
          this.UpdateBossPos(var2);
-         if (this.bossStep > 3 && this.bossPosY > -400) {
+         if (this.bossStep > 3 && this.bossPosY > -Boss4HighPos) {
             this.bossPosY -= 240;
          }
 
@@ -14625,16 +14625,16 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 9:
             this.bossDir = 1;
             this.bossAnim = 2;
-            this.bossPosX += 80;
-            if (this.bossPosX < var6 + 3500) {
+            this.bossPosX += Boss4Speed;
+            if (this.bossPosX < var6 + Boss4SisooOfs) {
                break;
             }
 
-            this.bossPosX = var6 + 3500;
+            this.bossPosX = var6 + Boss4SisooOfs;
             this.bossAnim = 0;
             this.bossFace = 1;
-            this.bossFaceCount = 50;
-            this.bossCount = 50;
+            this.bossFaceCount = Boss4ShootWait;
+            this.bossCount = Boss4ShootWait;
             ++this.bossStep;
          case 10:
             if (this.bossCount == 10) {
@@ -14649,16 +14649,16 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 11:
             this.bossDir = 1;
             this.bossAnim = 2;
-            this.bossPosX += 80;
-            if (this.bossPosX < var7 + 3500) {
+            this.bossPosX += Boss4Speed;
+            if (this.bossPosX < var7 + Boss4SisooOfs) {
                break;
             }
 
-            this.bossPosX = var7 + 3500;
+            this.bossPosX = var7 + Boss4SisooOfs;
             this.bossAnim = 0;
             this.bossFace = 1;
-            this.bossFaceCount = 50;
-            this.bossCount = 50;
+            this.bossFaceCount = Boss4ShootWait;
+            this.bossCount = Boss4ShootWait;
             ++this.bossStep;
          case 12:
             if (this.bossCount == 10) {
@@ -14673,7 +14673,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 13:
             this.bossDir = 1;
             this.bossAnim = 2;
-            this.bossPosX += 80;
+            this.bossPosX += Boss4Speed;
             if (this.bossPosX < 16000) {
                break;
             }
@@ -14681,8 +14681,8 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             this.bossPosX = 16000;
             this.bossAnim = 0;
             this.bossFace = 1;
-            this.bossFaceCount = 50;
-            this.bossCount = 50;
+            this.bossFaceCount = Boss4ShootWait;
+            this.bossCount = Boss4ShootWait;
             ++this.bossStep;
          case 14:
             this.bossDir = 0;
@@ -14706,8 +14706,8 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
             ++this.bossStep;
          case 3:
-            this.bossPosX -= 80;
-            if (this.bossPosX > var7 - 3500 + 10) {
+            this.bossPosX -= Boss4Speed;
+            if (this.bossPosX > var7 - Boss4SisooOfs + 10) {
                break;
             }
 
@@ -14715,16 +14715,16 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 4:
             this.bossDir = 0;
             this.bossAnim = 2;
-            this.bossPosX -= 80;
-            if (this.bossPosX > var7 - 3500) {
+            this.bossPosX -= Boss4Speed;
+            if (this.bossPosX > var7 - Boss4SisooOfs) {
                break;
             }
 
-            this.bossPosX = var7 - 3500;
+            this.bossPosX = var7 - Boss4SisooOfs;
             this.bossAnim = 0;
             this.bossFace = 1;
-            this.bossFaceCount = 50;
-            this.bossCount = 50;
+            this.bossFaceCount = Boss4ShootWait;
+            this.bossCount = Boss4ShootWait;
             ++this.bossStep;
          case 5:
             if (this.bossCount == 10) {
@@ -14739,13 +14739,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          case 6:
             this.bossAnim = 2;
             this.bossDir = 0;
-            this.bossPosX -= 80;
-            if (this.bossPosX <= var6 - 3500) {
-               this.bossPosX = var6 - 3500;
+            this.bossPosX -= Boss4Speed;
+            if (this.bossPosX <= var6 - Boss4SisooOfs) {
+               this.bossPosX = var6 - Boss4SisooOfs;
                this.bossAnim = 0;
                this.bossFace = 1;
-               this.bossFaceCount = 50;
-               this.bossCount = 50;
+               this.bossFaceCount = Boss4ShootWait;
+               this.bossCount = Boss4ShootWait;
                ++this.bossStep;
             }
          }
@@ -14926,7 +14926,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             } else {
                this.bossAnim = 2;
                this.bossDir = 0;
-               this.bossPosX -= 70;
+               this.bossPosX -= boss5Speed;
                if (this.bossPosX > -12000) {
                   break;
                }
@@ -14941,7 +14941,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             } else {
                this.bossAnim = 2;
                this.bossDir = 1;
-               this.bossPosX += 70;
+               this.bossPosX += boss5Speed;
                if (this.bossPosX < 12000) {
                   break;
                }
@@ -15135,10 +15135,10 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             ++this.bossStep;
          case 6:
             boss6Lamp = 2;
-            this.SetObj2(27, 1415, 60, 0, 0, 0, (this.bossOriginX + 64 + 32 - this.rnd(8) + 42) * 100);
-            this.SetObj2(27, 1415, 60, 0, 0, 0, (this.bossOriginX + 32 + this.rnd(46) - 23 + 42) * 100);
-            this.SetObj2(27, 1415, 60, 0, 0, 0, (this.bossOriginX - 32 + this.rnd(46) - 23 + 42) * 100);
-            this.SetObj2(27, 1415, 60, 0, 0, 0, (this.bossOriginX - 64 - 32 + this.rnd(24) + 42) * 100);
+            this.SetObj2(OBJ2_BOSS6_TAMA, 1415, 60, 0, 0, 0, (this.bossOriginX + 64 + 32 - this.rnd(8) + 42) * 100);
+            this.SetObj2(OBJ2_BOSS6_TAMA, 1415, 60, 0, 0, 0, (this.bossOriginX + 32 + this.rnd(46) - 23 + 42) * 100);
+            this.SetObj2(OBJ2_BOSS6_TAMA, 1415, 60, 0, 0, 0, (this.bossOriginX - 32 + this.rnd(46) - 23 + 42) * 100);
+            this.SetObj2(OBJ2_BOSS6_TAMA, 1415, 60, 0, 0, 0, (this.bossOriginX - 64 - 32 + this.rnd(24) + 42) * 100);
             this.bossCount = 300;
             ++this.bossStep;
          case 7:
@@ -15386,7 +15386,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   var11 = -var11;
                }
 
-               this.SetObj2(1, var9 + this.rnd(64) - 32, var10 + this.rnd(128) - 64 + var11, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUHATU, var9 + this.rnd(64) - 32, var10 + this.rnd(128) - 64 + var11, 0, 0, 0, 0);
             } else if ((this.animeTimer & 3) == 2 && boss6PistonNum != 0) {
                var9 = boss6PistonPos[boss6PistonNum][0] + this.bossOriginX;
                var10 = boss6PistonPos[boss6PistonNum][1] + this.bossOriginY;
@@ -15395,10 +15395,10 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                   var11 = -var11;
                }
 
-               this.SetObj2(1, var9 + this.rnd(64) - 32, var10 + this.rnd(128) - 64 + var11, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUHATU, var9 + this.rnd(64) - 32, var10 + this.rnd(128) - 64 + var11, 0, 0, 0, 0);
             }
          } else if (boss6Destroy == 2 && (this.animeTimer & 7) == 0) {
-            this.SetObj2(1, 1415 + this.rnd(16) - 8, 60 + this.rnd(16) - 8, 0, 0, 0, 0);
+            this.SetObj2(OBJ2_BAKUHATU, 1415 + this.rnd(16) - 8, 60 + this.rnd(16) - 8, 0, 0, 0, 0);
          }
 
          if (this.isHitBoss6() && this.bossStep < 50) {
@@ -15558,9 +15558,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
       if (this.endingStep >= 4 && this.rnd(15) == 0) {
          if (this.rnd(2) == 0) {
-            this.SetObj2(28 + this.rnd(7), -20, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 1, 0);
+            this.SetObj2(OBJ2_FRIC + this.rnd(7), -20, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 1, 0);
          } else {
-            this.SetObj2(28 + this.rnd(7), 260, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
+            this.SetObj2(OBJ2_FRIC + this.rnd(7), 260, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
          }
       }
 
@@ -15573,13 +15573,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          if (this.rnd(12) == 0) {
             switch(this.rnd(3)) {
             case 1:
-               this.SetObj2(31, this.PlayerPosX() - 300, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
+               this.SetObj2(OBJ2_USAGI, this.PlayerPosX() - 300, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
                break;
             case 2:
-               this.SetObj2(33, this.PlayerPosX() - 300, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
+               this.SetObj2(OBJ2_RISU, this.PlayerPosX() - 300, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
                break;
             default:
-               this.SetObj2(28, this.PlayerPosX() - 300, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
+               this.SetObj2(OBJ2_FRIC, this.PlayerPosX() - 300, this.PlayerPosY() - (30 + this.rnd(120)), 0, 300, 0, 0);
             }
          }
 
@@ -15693,7 +15693,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             }
 
             this.DoGc();
-            this.m_imgObj[100] = this.createImage("/animal.png");
+            this.m_imgObj[ANIMAL] = this.createImage("/animal.png");
             this.m_imgObj[121] = this.createImage("/ED_00.png");
             this.m_imgObj[122] = this.createImage("/ED3.png");
             this.m_imgObj[123] = this.createImage("/endegg_b.png");
@@ -16056,7 +16056,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
 
          if (var4 == 2 && Math.abs(var9 - (16 + var12)) < 4) {
-            this.SetObj2(1, var5, var6, 0, 0, 0, 0);
+            this.SetObj2(OBJ2_BAKUHATU, var5, var6, 0, 0, 0, 0);
          }
       }
 
@@ -16067,7 +16067,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          int var14 = var2 + var8 + this.dCos(var11) * 96 / 100;
          this.AraiOfsDraw(this.m_imgObj[121], var13, var14, 0, this.RectBossBallTbl);
          if ((this.animeTimer & 7) == 4) {
-            this.SetObj2(1, var13 + this.rnd(48) - 24, var14 + this.rnd(48) - 24, 0, 0, 0, 0);
+            this.SetObj2(OBJ2_BAKUHATU, var13 + this.rnd(48) - 24, var14 + this.rnd(48) - 24, 0, 0, 0, 0);
          }
       } else {
          this.AraiOfsDraw(this.m_imgObj[121], var5, var6, 0, this.RectBossBallTbl);
@@ -16174,7 +16174,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             this.DrawBossFace(2, var2, var3, var8, var10);
             this.AraiOfsDraw(this.m_imgObj[120], var2, var3, var8, this.RectBossTbl[8]);
             if (var11 != 0) {
-               this.SetObj2(1, var2 + this.rnd(32) - 16, var3 + this.rnd(32) - 16 - 8, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUHATU, var2 + this.rnd(32) - 16, var3 + this.rnd(32) - 16 - 8, 0, 0, 0, 0);
             }
             break;
          case 4:
@@ -16220,7 +16220,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             this.DrawBossFace(5, var2, var3, 1, var11);
             this.AraiOfsDraw(this.m_imgObj[147], var2, var3, 1, this.RectBoss2Tbl[3]);
             if (var11 != 0) {
-               this.SetObj2(1, var2 + this.rnd(32) - 16, var3 + this.rnd(32) - 16 - 8, 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUHATU, var2 + this.rnd(32) - 16, var3 + this.rnd(32) - 16 - 8, 0, 0, 0, 0);
             }
          }
 
@@ -16265,7 +16265,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       default:
          continueStep = 1;
       case 1:
-         continueSonicPosX = 120;
+         continueSonicPosX = ContinueSonicCenterX;
          continueSonicPosY = -20;
          continueCount = 164;
          continueResult = 0;
@@ -16287,11 +16287,11 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       case 2:
          continueSonicAnim = 0;
          continueSonicPosY += 15;
-         if (continueSonicPosY < 167) {
+         if (continueSonicPosY < ContinueSonicBottomY) {
             return;
          }
 
-         continueSonicPosY = 167;
+         continueSonicPosY = ContinueSonicBottomY;
          continueSonicAnim = 1;
          ++continueStep;
       }
@@ -16309,9 +16309,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    }
 
    private void drawContinue() {
-      int var1 = continueSonicPosX;
-      int var2 = continueSonicPosY;
-      byte var3 = 120;
+      int xpos = continueSonicPosX;
+      int ypos = continueSonicPosY;
+      byte xcenter = ContinueSonicCenterX;
       gg.setColor(0);
       gg.fillRect(0, 0, 240, 240);
       if (continueStep >= 2) {
@@ -16327,7 +16327,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             var10001 = this.m_imgObj[121];
             var10009 = gg;
             var10010 = gg;
-            gg.drawRegion(var10001, 0, 0, 48, 32, 0, var3, 167, 1 | 2);
+            gg.drawRegion(var10001, 0, 0, 48, 32, 0, xcenter, ContinueSonicBottomY, 1 | 2);
             var4 = this.animeTimer % 5;
             var5 = ContinueSonicTbl[var4][0];
             var6 = ContinueSonicTbl[var4][1];
@@ -16337,7 +16337,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             var10001 = this.m_imgCmd[SONIC_N];
             var10009 = gg;
             var10010 = gg;
-            gg.drawRegion(var10001, var5, var6, var7, var8, var10, var1, var2, 1 | 2);
+            gg.drawRegion(var10001, var5, var6, var7, var8, var10, xpos, ypos, 1 | 2);
          } else if (continueSonicAnim == 1) {
             var4 = this.animeTimer >> 2 & 3;
             var5 = ContinueSonicTbl2[var4][0];
@@ -16347,7 +16347,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             var10001 = this.m_imgObj[121];
             var10009 = gg;
             var10010 = gg;
-            gg.drawRegion(var10001, var5, var6, var7, var8, 0, var3, 167, 1 | 2);
+            gg.drawRegion(var10001, var5, var6, var7, var8, 0, xcenter, ContinueSonicBottomY, 1 | 2);
          } else if (continueSonicAnim == 2) {
             var4 = continueSonicAnim2;
             if (continueSonicAnim2 < 0) {
@@ -16380,21 +16380,21 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             var10001 = this.m_imgObj[121];
             var10009 = gg;
             var10010 = gg;
-            gg.drawRegion(var10001, 0, 0, 48, 32, 0, var3, 167, 1 | 2);
+            gg.drawRegion(var10001, 0, 0, 48, 32, 0, xcenter, ContinueSonicBottomY, 1 | 2);
             var10001 = this.m_imgCmd[SONIC_N];
-            int var10008 = var2 + var9;
+            int var10008 = ypos + var9;
             var10009 = gg;
             var10010 = gg;
-            gg.drawRegion(var10001, var14, var15, var7, var8, 0, var1, var10008, 1 | 2);
+            gg.drawRegion(var10001, var14, var15, var7, var8, 0, xpos, var10008, 1 | 2);
          }
 
          var10001 = this.m_imgObj[121];
-         int var10007 = var3 - 16;
+         int var10007 = xcenter - 16;
          var10009 = gg;
          var10010 = gg;
          gg.drawRegion(var10001, 96, 0, 16, 16, 0, var10007, 128, 1 | 2);
          var10001 = this.m_imgObj[121];
-         var10007 = var3 + 16;
+         var10007 = xcenter + 16;
          var10009 = gg;
          var10010 = gg;
          gg.drawRegion(var10001, 96, 0, 16, 16, 0, var10007, 128, 1 | 2);
@@ -16402,70 +16402,70 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          int var12 = continueCount / 15 / 10 % 10;
          var10001 = this.m_imgCmd[WINDOU_SUUJI];
          int var10002 = var12 * 7;
-         var10007 = var3 - 4;
+         var10007 = xcenter - 4;
          var10009 = gg;
          var10010 = gg;
          gg.drawRegion(var10001, var10002, 0, 7, 13, 0, var10007, 128, 1 | 2);
          var10001 = this.m_imgCmd[WINDOU_SUUJI];
          var10002 = var11 * 7;
-         var10007 = var3 + 4;
+         var10007 = xcenter + 4;
          var10009 = gg;
          var10010 = gg;
          gg.drawRegion(var10001, var10002, 0, 7, 13, 0, var10007, 128, 1 | 2);
          var10001 = this.m_imgObj[121];
          var10009 = gg;
          var10010 = gg;
-         gg.drawRegion(var10001, 0, 64, 120, 16, 0, var3, 80, 1 | 2);
+         gg.drawRegion(var10001, 0, 64, 120, 16, 0, xcenter, 80, 1 | 2);
       }
    }
 
    private void IkeshitaLoadStageImage(int var1) {
       try {
          if (this.zoneNumber == 5) {
-            this.m_imgObj[BURANKO] = this.createImage("/buranko_.png");
-            this.m_imgObj[35] = this.createImage("/noko.png");
-            this.m_imgObj[DOOR] = this.createImage("/door.png");
-            this.m_imgObj[BELTC] = this.createImage("/beltc.png");
-            this.m_imgObj[31] = this.createImage("/yukae.png");
-            this.m_imgObj[29] = this.createImage("/yukai.png");
+            this.m_imgObj[BURANKO_NFLAG] = this.createImage("/buranko_.png");
+            this.m_imgObj[NOKO_NFLAG] = this.createImage("/noko.png");
+            this.m_imgObj[DOOR_NFLAG] = this.createImage("/door.png");
+            this.m_imgObj[BELTC_NFLAG] = this.createImage("/beltc.png");
+            this.m_imgObj[YUKAE_NFLAG] = this.createImage("/yukae.png");
+            this.m_imgObj[YUKAI_NFLAG] = this.createImage("/yukai.png");
             this.m_imgObj[84] = this.createImage("/beltcon.png");
-            this.m_imgObj[27] = this.createImage("/bryuka_sc.png");
+            this.m_imgObj[BRYUKA_NFLAG] = this.createImage("/bryuka_sc.png");
          }
 
          if (this.zoneNumber == 0) {
-            this.m_imgObj[4] = this.createImage("/thashi.png");
-            this.m_imgObj[18] = this.createImage("/brkabe_g.png");
+            this.m_imgObj[THASHI_NFLAG] = this.createImage("/thashi.png");
+            this.m_imgObj[BRKABE_SFLAG] = this.createImage("/brkabe_g.png");
          }
 
          if (this.zoneNumber == 2) {
-            this.m_imgObj[BURANKO] = this.createImage("/buranko_m.png");
+            this.m_imgObj[BURANKO_NFLAG] = this.createImage("/buranko_m.png");
          }
 
          if (this.zoneNumber == 3) {
-            this.m_imgObj[75] = this.createImage("/mfire.png");
-            this.m_imgObj[BURANKO] = this.createImage("/buranko_s.png");
+            this.m_imgObj[MFIRE_NFLAG] = this.createImage("/mfire.png");
+            this.m_imgObj[BURANKO_NFLAG] = this.createImage("/buranko_s.png");
          }
 
          if (this.zoneNumber == 1 && this.stageNumber != 3) {
-            this.m_imgObj[12] = this.createImage("/dai_la.png");
+            this.m_imgObj[DAI_NFLAG] = this.createImage("/dai_la.png");
          }
 
          if (this.zoneNumber != 2) {
-            this.m_imgObj[15] = this.createImage("/switch2.png");
+            this.m_imgObj[SWITCH2_NFLAG] = this.createImage("/switch2.png");
          }
 
          if (this.zoneNumber == 1 && this.stageNumber == 3) {
-            this.m_imgObj[32] = this.createImage("/z_dai4_l.png");
-            this.m_imgObj[12] = this.createImage("/z_dai_la.png");
+            this.m_imgObj[DAI4_NFLAG] = this.createImage("/z_dai4_l.png");
+            this.m_imgObj[DAI_NFLAG] = this.createImage("/z_dai_la.png");
          }
 
          if (this.zoneNumber == 4) {
-            this.m_imgObj[107] = this.createImage("/dai2_3.png");
+            this.m_imgObj[DAI2_0xE0] = this.createImage("/dai2_3.png");
          }
 
-         this.m_imgObj[44] = this.createImage("/gole.png");
-         this.m_imgObj[60] = this.createImage("/tekyu.png");
-         this.m_imgObj[45] = this.createImage("/bten.png");
+         this.m_imgObj[GOLE_NFLAG] = this.createImage("/gole.png");
+         this.m_imgObj[TEKYU_NFLAG] = this.createImage("/tekyu.png");
+         this.m_imgObj[BTEN_NFLAG ] = this.createImage("/bten.png");
       } catch (Throwable var3) {
       }
 
@@ -16958,7 +16958,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             var10002 = objectData[3]--;
          }
 
-         int[][] var6 = this.searchObject(10, 0);
+         int[][] var6 = this.searchObject(BOX_SFLAG, 0);
 
          for(int var2 = 0; var2 < var6.length; ++var2) {
             if (objectData[2] - 56 - (var6[var2][2] - 16) <= 32 && objectData[2] - 56 - (var6[var2][2] - 16) >= -112 && switchflag[128] && objectData[3] < objectData[9] + 16) {
@@ -17276,7 +17276,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       if (objectData[4] != 129 && this.zoneNumber == 2) {
          int[][] var10;
          if (this.zoneNumber == 2 && this.stageNumber == 0 && objectData[4] == 0) {
-            var10 = this.searchObject(8, 128);
+            var10 = this.searchObject(TURI_NFLAG, 128);
 
             for(var5 = 0; var5 < var10.length; ++var5) {
                if (var10[var5][2] - 56 - (objectData[2] - 16) <= 32 && var10[var5][2] - 56 - (objectData[2] - 16) >= -112) {
@@ -17284,7 +17284,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                }
             }
 
-            int[][] var11 = this.searchObject(15, 128);
+            int[][] var11 = this.searchObject(SWITCH2_NFLAG, 128);
             switchflag[129] = false;
 
             for(var5 = 0; var5 < var11.length; ++var5) {
@@ -17296,7 +17296,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
 
          if (objectData[4] != 0) {
-            var10 = this.searchObject(9, 16);
+            var10 = this.searchObject(TOGE_NFLAG, 16);
 
             for(var5 = 0; var5 < var10.length; ++var5) {
                if (var10[var5][2] - 20 - (objectData[2] - 16) <= 32 && var10[var5][2] - 20 - (objectData[2] - 16) >= -40 && var10[var5][3] - 20 - (objectData[3] - 16) <= 32 && var10[var5][3] - 20 - (objectData[3] - 16) >= -40 && objectData[10] == 15) {
@@ -17306,7 +17306,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          }
 
          if (objectData[4] == 2) {
-            var10 = this.searchObject(77, 16);
+            var10 = this.searchObject(YOGANC_NFLAG, 16);
 
             for(var5 = 0; var5 < var10.length; ++var5) {
                if (var10[var5][2] - 20 - 64 - (objectData[2] - 16) <= 32 && var10[var5][2] - 20 - 64 - (objectData[2] - 16) >= -112 && var10[var5][3] - 48 + 16 - 16 - (objectData[3] - 16) <= 32 && var10[var5][3] - 48 + 16 - 16 - (objectData[3] - 16) >= -32 && var10[var5][5] > 1 && var10[var5][5] / 4 < 26) {
@@ -19515,7 +19515,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
          if (var7 >= 0) {
             if (PlayerBall && var7 != 3 || !PlayerJump && PlayerBall && var7 == 3) {
                PlayerParam[5] = -768;
-               this.SetObj2(1, objectData[2], objectData[3], 0, 0, 0, 0);
+               this.SetObj2(OBJ2_BAKUHATU, objectData[2], objectData[3], 0, 0, 0, 0);
                objectData[5] = objectData[4];
                objectData[13] = this.animeTimer;
                this.getItem(objectData[4]);
@@ -19872,7 +19872,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
 
       if (objectData[5] == 1) {
          if ((this.cpuTimer - objectData[10]) % 20 == 0 && this.masin_nflag_ike_x.length > (this.cpuTimer - objectData[10]) / 20) {
-            this.SetObj2(1, objectData[8] + this.masin_nflag_ike_x[(this.cpuTimer - objectData[10]) / 20], objectData[9] + this.masin_nflag_ike_y[(this.cpuTimer - objectData[10]) / 20], 0, 0, 0, 0);
+            this.SetObj2(OBJ2_BAKUHATU, objectData[8] + this.masin_nflag_ike_x[(this.cpuTimer - objectData[10]) / 20], objectData[9] + this.masin_nflag_ike_y[(this.cpuTimer - objectData[10]) / 20], 0, 0, 0, 0);
          }
 
          if (this.cpuTimer - objectData[10] > 100) {
@@ -20688,13 +20688,13 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             if (objectData[4] != 53 && objectData[4] != 37 && objectData[4] != 69) {
                if (objectData[4] != 55 && objectData[4] != 71 && objectData[4] != 23) {
                   if (objectData[4] == 54) {
-                     this.SetObj2(16, objectData[2], objectData[3], -200, 0, 0, 0);
+                     this.SetObj2(OBJ2_FIREBALL, objectData[2], objectData[3], -200, 0, 0, 0);
                   }
                } else {
-                  this.SetObj2(16, objectData[2], objectData[3], 200, 0, 0, 0);
+                  this.SetObj2(OBJ2_FIREBALL, objectData[2], objectData[3], 200, 0, 0, 0);
                }
             } else {
-               this.SetObj2(16, objectData[2], objectData[3], 0, 200, 0, 0);
+               this.SetObj2(OBJ2_FIREBALL, objectData[2], objectData[3], 0, 200, 0, 0);
             }
          } else {
             if (objectData[4] == 48) {
@@ -20725,7 +20725,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
                var3 = 136;
             }
 
-            this.SetObj2(20, objectData[2], objectData[3], 0, 0, 0, var3);
+            this.SetObj2(OBJ2_FIREBALL5, objectData[2], objectData[3], 0, 0, 0, var3);
          }
       }
 
@@ -20738,7 +20738,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       }
 
       if (objectData[4] == 16) {
-         int[][] var4 = this.searchObject(10, 2);
+         int[][] var4 = this.searchObject(BOX_SFLAG, 2);
 
          int var2;
          for(var2 = 0; var2 < var4.length; ++var2) {
@@ -20951,9 +20951,9 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
    private void kazari_sflag_move_ikeshita(int var1) {
       if (this.cpuTimer % 120 == 0) {
          if (objectData[19] == 1) {
-            this.SetObj2(21, objectData[2] + 16, objectData[3] + 10, 260, 0, 0, 0);
+            this.SetObj2(OBJ2_KAZARIFIRE, objectData[2] + 16, objectData[3] + 10, 260, 0, 0, 0);
          } else if (objectData[19] == 0) {
-            this.SetObj2(21, objectData[2] - 16, objectData[3] + 10, -260, 0, 0, 0);
+            this.SetObj2(OBJ2_KAZARIFIRE, objectData[2] - 16, objectData[3] + 10, -260, 0, 0, 0);
          }
       }
 
@@ -21005,7 +21005,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             } else if (objectData[10] == 2) {
                var10000 = objectData;
                var10000[3] -= 2;
-               var5 = this.searchObject(9, -1);
+               var5 = this.searchObject(TOGE_NFLAG, -1);
 
                for(var4 = 0; var4 < var5.length; ++var4) {
                   if (var5[var4][2] - 20 - (objectData[2] - 16) <= 32 && var5[var4][2] - 20 - (objectData[2] - 16) >= -40 && var5[var4][3] - 60 - (objectData[3] - 16) <= 16 && var5[var4][3] - 60 - (objectData[3] - 16) >= -40) {
@@ -21033,7 +21033,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
             }
 
             if (this.zoneNumber == 1 && this.stageNumber == 3) {
-               var5 = this.searchObject(15, 1);
+               var5 = this.searchObject(SWITCH2_NFLAG, 1);
                switchflag[128] = false;
 
                for(var4 = 0; var4 < var5.length; ++var4) {
@@ -23583,7 +23583,7 @@ public class MainCanvas extends GameCanvas implements CommandListener, PlayerLis
       musicRetry = 0;
       musicRequest = -1;
       musicNum = -1;
-      friendTbl = new byte[][]{{28, 31}, {32, 29}, {33, 29}, {28, 34}, {34, 30}, {31, 30}, {33, 33}, {31, 31}};
+      friendTbl = new byte[][]{{OBJ2_FRIC, OBJ2_USAGI}, {OBJ2_PENGUIN, OBJ2_AZARASI}, {OBJ2_RISU, OBJ2_AZARASI}, {OBJ2_FRIC, OBJ2_BUTA}, {OBJ2_BUTA, OBJ2_NIWATORI}, {OBJ2_USAGI, OBJ2_NIWATORI}, {OBJ2_RISU, OBJ2_RISU}, {OBJ2_USAGI, OBJ2_USAGI}};
       sisootbl = new byte[]{36, 36, 38, 40, 42, 44, 42, 40, 38, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2};
       batAnimTbl = new byte[]{1, 2, 3, 2};
       RectTblKamere = new short[][]{{0, 0, 56, 40, 0}, {0, 40, 56, 40, 0}, {0, 80, 56, 40, 0}, {0, 120, 56, 24, 0}, {0, 144, 56, 16, 0}, {0, 160, 56, 16, 0}};
