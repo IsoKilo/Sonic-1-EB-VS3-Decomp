@@ -278,9 +278,3 @@ public final class DistantBg {
     return (paramInt1 + 240 < box[paramInt3]) ? false : ((paramInt1 >= box[paramInt3 + 1]) ? false : ((paramInt2 + 168 + 36 < box[paramInt3 + 2]) ? false : (!(paramInt2 >= box[paramInt3 + 3]))));
   }
 }
-
-
-/* Location:              /home/kilo/Downloads/Sonic 1 J2ME Decomp/!/DistantBg.class
- * Java compiler version: 2 (46.0)
- * JD-Core Version:       1.1.3
- */

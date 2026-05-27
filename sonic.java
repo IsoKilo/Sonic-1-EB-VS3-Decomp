@@ -51,9 +51,3 @@ public class sonic extends MIDlet implements Runnable {
     } catch (Exception exception) {}
   }
 }
-
-
-/* Location:              /home/kilo/Downloads/Sonic 1 J2ME Decomp/!/sonic.class
- * Java compiler version: 2 (46.0)
- * JD-Core Version:       1.1.3
- */

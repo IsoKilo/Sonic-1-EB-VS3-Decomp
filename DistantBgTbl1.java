@@ -259,9 +259,3 @@ public final class DistantBgTbl1 {
       16, 48, 48, 32, 48, 16, 16, 32, 16, 48, 
       48, 32, 48, 16, 16, 32, 16, 32, 48, 32 };
 }
-
-
-/* Location:              /home/kilo/Downloads/Sonic 1 J2ME Decomp/!/DistantBgTbl1.class
- * Java compiler version: 2 (46.0)
- * JD-Core Version:       1.1.3
- */
